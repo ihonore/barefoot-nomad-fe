@@ -57,6 +57,21 @@ const LoginComponent = (props) => {
     props.clearSnackbar();
   };
 
+  const googleDir = async () => {
+    await window.open(
+      'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/google'
+    );
+  };
+
+  const facebook = () => {
+    window.open(
+      'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/facebook',
+      '_self'
+    );
+    props.history.go('/');
+    window.location.reload;
+  };
+
   useEffect(() => {
     if (token) {
       const funct = async () => {
@@ -81,27 +96,35 @@ const LoginComponent = (props) => {
       >
         <Loader open={loading} />
         <Container className={classes.formContainer}>
-          <Paper className="paper-login">
-            <Typography component="h1" variant="h5" className={classes.title}>
+          <Paper className='paper-login'>
+            <Typography component='h1' variant='h5' className={classes.title}>
               Sign In to Your Account
             </Typography>
             <div className={classes.social}>
-              <GoogleIcon className={classes.googleIcon} />
-              <FacebookRoundedIcon />
+              {/* <GoogleIcon className={classes.google} /> */}
+              <GoogleIcon
+                className={classes.google}
+                className='iconTestid'
+                onClick={googleDir}
+              />
+              <FacebookRoundedIcon
+                className={classes.facebook}
+                onClick={facebook}
+              />
             </div>
             <br />
             <Typography className={classes.social}>
               Or use your email account
             </Typography>
             <ValidatorForm form onSubmit={handleLogin}>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin='normal' required fullWidth>
                 <TextValidator
-                  label="email"
-                  name="Email"
-                  variant="filled"
+                  label='email'
+                  name='Email'
+                  variant='filled'
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">
+                      <InputAdornment position='end'>
                         <EmailIcon />
                       </InputAdornment>
                     ),
@@ -116,15 +139,15 @@ const LoginComponent = (props) => {
                   ]}
                 />
               </FormControl>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin='normal' required fullWidth>
                 <TextValidator
-                  label="Password"
-                  name="password"
-                  type="password"
-                  variant="filled"
+                  label='Password'
+                  name='password'
+                  type='password'
+                  variant='filled'
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">
+                      <InputAdornment position='end'>
                         <LockIcon />
                       </InputAdornment>
                     ),
@@ -137,16 +160,16 @@ const LoginComponent = (props) => {
                 />
               </FormControl>
               <Link
-                href="#"
-                underline="none"
+                href='#'
+                underline='none'
                 style={{ color: '#07539F', marginBottom: '20px' }}
               >
                 {'Forgot Password?'}
               </Link>
               <br />
               <Button
-                variant="contained"
-                type="submit"
+                variant='contained'
+                type='submit'
                 style={{
                   borderRadius: '20px',
                   textAlign: 'center',
@@ -189,7 +212,7 @@ const LoginComponent = (props) => {
       >
         <div className={classes.rightSideDiv}>
           <div className={classes.backgroundDiv}></div>
-          <Typography variant="h4" gutterBottom className={classes.rightBanner}>
+          <Typography variant='h4' gutterBottom className={classes.rightBanner}>
             Hello Friend!
           </Typography>
           <div className={classes.rightBannerParagraph}>
@@ -199,7 +222,7 @@ const LoginComponent = (props) => {
           </div>
 
           <Button
-            variant="outlined"
+            variant='outlined'
             style={{
               borderRadius: '20px',
               textAlign: 'center',

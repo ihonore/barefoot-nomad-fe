@@ -73,6 +73,12 @@ const useStyles = makeStyles({
       position: 'absolute',
       transform: 'rotate(40.54deg)'
     }
+    google: {
+      cursor: 'pointer',
+    },
+    facebook: {
+      cursor: 'pointer',
+    },
   });
 
   export default useStyles;
