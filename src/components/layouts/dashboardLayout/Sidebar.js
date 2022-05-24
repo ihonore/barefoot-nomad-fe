@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   List,
   ListItem,
   ListItemButton,
@@ -7,12 +8,40 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { logout } from '../../../redux/actions/loginActions';
+import { adminSideBarData, userSideBarData } from './menuData';
+import './sidebar.scss';
 
-const Sidebar = (props) => {
+const Sidebar = () => {
+  const currentUserState = useSelector((state) => state.currentUser);
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const { currentUser } = currentUserState;
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModel = () => {
+    setOpen(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.reload();
+  };
   const navigate = useNavigate();
-  const menuData = props.sideBarData;
+  const menuData =
+    currentUser?.roleId === 1 ? adminSideBarData : userSideBarData;
   return (
     <div className="sidebar">
       <Box
@@ -38,18 +67,54 @@ const Sidebar = (props) => {
         </Typography>
         <List>
           {menuData.map((data) => (
-            <ListItem key={data.title} disablePadding>
-              <ListItemButton onClick={() => navigate(data.route)}>
-                <ListItemIcon sx={{ color: 'white' }}>{data.icon}</ListItemIcon>
-                <ListItemText
-                  sx={{ display: { xs: 'none', sm: 'block' } }}
-                  primary={data.title}
-                />
-              </ListItemButton>
+            <ListItem
+              className={pathname === data.route ? 'active' : ''}
+              key={data.title}
+              disablePadding
+            >
+              {data.title === 'Logout' ? (
+                <ListItemButton onClick={() => handleClickOpen()}>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    {data.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ display: { xs: 'none', md: 'block' } }}
+                    primary={data.title}
+                  />
+                </ListItemButton>
+              ) : (
+                <ListItemButton onClick={() => navigate(data.route)}>
+                  <ListItemIcon sx={{ color: 'white' }}>
+                    {data.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ display: { xs: 'none', md: 'block' } }}
+                    primary={data.title}
+                  />
+                </ListItemButton>
+              )}
             </ListItem>
           ))}
         </List>
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleCloseModel}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to log out of barefoot Nomad?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModel}>No</Button>
+          <Button onClick={handleLogout} autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
