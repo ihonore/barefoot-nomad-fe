@@ -13,11 +13,11 @@ import SocialAuthGoogleDir from '../views/home/SocialAuthGoogleDir';
 import AccommodationList from '../components/accommodation/AccommodationList';
 import SuccessLogin from '../views/home/SuccessLogin';
 import Unauthorized from './unauthorizedRoutes';
+import Roles from '../components/roles/roles';
 
 const AllRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/login" element={<Login />} />
     <Route
       path="/dashboard"
@@ -35,6 +35,10 @@ const AllRoutes = () => (
         </ProtectRoute>
       }
     />
+     <Route exact path="/users"  element={
+            <ProtectRoute redirectTo='/login'>
+              <Roles/>
+            </ProtectRoute>} />
     <Route path="/signup" element={<Signup />} />
     <Route path="/signup/success" element={<SignupSuccess />} />
     <Route
@@ -51,6 +55,11 @@ const AllRoutes = () => (
       path="/google/success/:token"
       element={<SocialAuthGoogleDir />}
     />
+     
+     <Route exact path="/users"  element={
+            <ProtectRoute redirectTo='/login'>
+              <Roles/>
+            </ProtectRoute>} />
 
     <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/login" element={<Login />} />
