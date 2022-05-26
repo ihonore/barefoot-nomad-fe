@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  color:blue;
+  color: blue;
 }
 body {
   background-color: #e5eaff;
@@ -23,7 +23,7 @@ body {
   font-size: calc(10px + 2vmin);
   color: rgb(7, 90, 245);
   height: 60vh;
-  width: 50%;
+  width: 40%;
   border: 2px solid rgb(7, 90, 245);
   margin: 10vh auto;
   padding-top: 2rem;

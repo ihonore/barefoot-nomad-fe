@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Accommodations from '../components/accommodations/accommodations';
 import Home from '../views/home/Home';
 import Dashboard from '../components/layouts/dashboardLayout';
 import TripRequests from '../components/tripRequests/TripRequests';
@@ -11,16 +10,15 @@ import Login from '../views/home/Login';
 import Signup from '../components/signup/Signup';
 import SignupSuccess from '../components/signup/SignupSuccess';
 import SocialAuthGoogleDir from '../views/home/SocialAuthGoogleDir';
-import Accommodation from '../components/accommodation/Accommodation';
 import AccommodationList from '../components/accommodation/AccommodationList';
-import ProtectedTravelAdminRoutes from './protectedTravelAdminRoutes';
+import SuccessLogin from '../views/home/SuccessLogin';
+import Unauthorized from './unauthorizedRoutes';
 
 const AllRoutes = () => (
   <Routes>
-    <Route path='/' element={<Home />} />
-    {/* <Route path='/accommodations' element={<AccommodationList />} /> */}
-    <Route path='/dashboard' element={<Dashboard />} />
-    <Route path='/login' element={<Login />} />
+    <Route path="/" element={<Home />} />
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/login" element={<Login />} />
     <Route
       path="/dashboard"
       element={
@@ -41,11 +39,11 @@ const AllRoutes = () => (
     <Route path="/signup/success" element={<SignupSuccess />} />
     <Route
       exact
-      path='/accommodations'
+      path="/accommodations"
       element={
-        <ProtectedTravelAdminRoutes redirectTo='/login'>
+        <ProtectRoute redirectTo="/login">
           <AccommodationList />
-        </ProtectedTravelAdminRoutes>
+        </ProtectRoute>
       }
     />
     <Route
@@ -54,6 +52,17 @@ const AllRoutes = () => (
       element={<SocialAuthGoogleDir />}
     />
 
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/login" element={<Login />} />
+    <Route
+      exact
+      path="/success"
+      element={(
+        <ProtectRoute redirectTo="/login">
+          <SuccessLogin />
+        </ProtectRoute>
+      )}
+    />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );
