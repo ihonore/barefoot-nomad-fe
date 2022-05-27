@@ -86,3 +86,7 @@ export const accommodationUpdateType = {
 
 // DASHBOARD ACTION TYPES
 export const GET_TRIPSTATISTICS = 'GET_TRIPSTATISTICS';
+export const actionTypes = {
+  GET_USERSEARCH: 'GET_USERSEARCH',
+  // Put all other types below
+};

@@ -22,9 +22,14 @@ import setCurrentUser, {
 } from '../../../redux/actions/currentUserActions';
 import { loadNotifications } from '../../../redux/actions/notificationsActions';
 import { showNotificationPanel } from '../../../redux/actions/notificationPanelActions';
+// import { DataGrid } from '@mui/x-data-grid';
+import setCurrentUser, {
+  setCurrentUserProfile,
+} from '../../../redux/actions/currentUserActions';
+import Users from './search/user';
+import DataTable from './search/DataTable';
 
 const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
-
 const Search = styled('div')(({ theme }) => ({
   backgroundColor: 'white',
   padding: '0 10px',
@@ -45,6 +50,7 @@ const Icons = styled(Box)(({ theme }) => ({
 }));
 
 const TopBar = () => {
+  const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const entireState = useSelector((state) => state);
   const notificationsState = entireState.allNotifications;
@@ -71,7 +77,7 @@ const TopBar = () => {
           headers: {
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       )
       .catch((err) => {
         console.log(err);
@@ -180,7 +186,7 @@ const TopBar = () => {
             </Typography>
           </Box>
           <Search>
-            <InputBase placeholder="search..." />
+            <InputBase placeholder="search..."  onChange={(e) => setQuery(e.target.value)} />
             <SearchIcon
               sx={{
                 color: 'white',

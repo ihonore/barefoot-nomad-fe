@@ -19,10 +19,12 @@ import notificationsReducer from './notificationsReducer';
 import notificationPanelReducer from './notificationPanelReducer';
 import singleTripRequestReducer from './singleTripRequestReducer';
 import tripViewReducer from './tripViewReducer';
+import globalUserSearchReducer from './userSearchReducer';
 
 export default combineReducers({
   mostTravelledLocation: mostTravelledReducer,
   tripStatistics: landingDashboardReducers,
+  globalUserSearch: globalUserSearchReducer,
   allAccommodations: accommodationReducer,
   allTripRequests: tripRequestsReducer,
   singleTrip: singleTripRequestReducer,
