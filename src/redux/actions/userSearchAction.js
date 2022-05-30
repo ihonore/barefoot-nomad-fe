@@ -7,8 +7,8 @@ const getUserSearch = (data) => ({
   type: actionTypes.GET_USERSEARCH,
   payload: data,
 });
-const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
-console.log('token----------------------------------------------------');
+const token = JSON.parse(localStorage.getItem('userToken')).accesstoken;
+
 const setUserSearch = () => async (dispatch) => {
   const response = await axios.get(API_URL,
     {

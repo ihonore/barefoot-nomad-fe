@@ -23,11 +23,13 @@ import setCurrentUser, {
 import { loadNotifications } from '../../../redux/actions/notificationsActions';
 import { showNotificationPanel } from '../../../redux/actions/notificationPanelActions';
 // import { DataGrid } from '@mui/x-data-grid';
+// import SearchBar from 'material-ui-search-bar';
 import setCurrentUser, {
   setCurrentUserProfile,
 } from '../../../redux/actions/currentUserActions';
-import Users from './search/user';
-import DataTable from './search/DataTable';
+import setUserSearch from '../../../redux/actions/userSearchAction';
+// import useStyles from '../../../views/home/homeStyle';
+// import DataTable from './search/DataTable';
 
 const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
 const Search = styled('div')(({ theme }) => ({
@@ -46,11 +48,21 @@ const Icons = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
 const TopBar = () => {
   const [query, setQuery] = useState('');
+  console.log('query+++++++++++++++++++++++++', query);
+  const { globalUserSearch } = useSelector((state) => state.globalUserSearch);
+
+  console.log(globalUserSearch.filter((globalUserSearch) => globalUserSearch.tripReason.includes(query)));
+
+  const search = (x) => globalUserSearch.filter((globalUserSearch) => globalUserSearch.tripReason.includes(x));
+
+  console.log('search++++++++++++++++++++++++', search(query));
+
   const dispatch = useDispatch();
   const entireState = useSelector((state) => state);
   const notificationsState = entireState.allNotifications;
@@ -148,6 +160,7 @@ const TopBar = () => {
 
     console.log('socket///', socket);
     dispatch(loadNotifications());
+    dispatch(setUserSearch());
   }, []);
 
   useEffect(() => {

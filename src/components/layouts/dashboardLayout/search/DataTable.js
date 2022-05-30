@@ -1,53 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useDispatch, useSelector } from 'react-redux';
-import setUserSearch from '../../../../redux/actions/tripRequestsActions';
+/* eslint-disable no-shadow */
+import * as React from 'react';
+// import { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { useSelector } from 'react-redux';
+import TopBar from '../TopBar';
 
-// const columns = [
-//   { field: 'id', headerName: 'ID' },
-//   { field: 'title', headerName: 'TITLE' },
-//   { field: 'body', headerName: 'BODY' },
-// ];
-const columns = [
-  { field: 'id', headerName: 'ID' },
-  { field: 'names', headerName: 'NAMES' },
-  { field: 'destinations', headerName: 'DESTINATION' },
-  { field: 'departLocation', headerName: 'DEPARTURE LOCATION' },
-  { field: 'tripReason', headerName: 'TRIP REASON' },
-  { field: 'status', headerName: 'STATUS' },
-];
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.blue,
+    color: theme.palette.common.red,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-const DataTable = () => {
-  const dispatch = useDispatch();
-  const [tabledata, setTableData] = useState([]);
-  console.log('tabledata++++++++++++++++++++', tabledata);
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
-  const globalUserSearchState = useSelector((state) => state.globalUserSearch);
-console.log('globalUserSearchState+++++++++++++++++++++++++++++++++++', globalUserSearchState);
-  useEffect(() => {
-    dispatch(setUserSearch());
-  }, []);
+export default function DataTable() {
+  // const globalUserSearchState = useSelector((state) => state.globalUserSearch);
+  const { globalUserSearch } = useSelector((state) => state.globalUserSearch);
+  // console.log('globalUserSearch++++++++++++++++++++', globalUserSearch);
 
-  // useEffect(() => {
-
-  //     fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/trips')
-  //         .then((data) => data.json())
-  //         .then((data) => setTableData(data))
-  //         .then((data) => console.log('data++++++++++++', data));
-  // });
   return (
+    <TableContainer component={Paper}>
 
-    <div style={{
-      marginTop: 100, marginLeft: -1000, height: 480, width: '80%',
-    }}
-    >
-      <DataGrid
-        rows={tabledata}
-        columns={columns}
-        pageSize={7}
-      />
-    </div>
+      <Table
+        sx={{
+          height: 480, width: '76%', marginTop: '5%', marginLeft: '21%',
+        }}
+        aria-label="customized table"
+      >
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell align="center">NAMES</StyledTableCell>
+            <StyledTableCell align="center">DESTINATIONS</StyledTableCell>
+            <StyledTableCell align="center">DEPARTURE LOCATION</StyledTableCell>
+            <StyledTableCell align="center">TRIP REASON</StyledTableCell>
+            <StyledTableCell align="center">STATUS</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {globalUserSearch && globalUserSearch.map((globalUserSearch) => (
+            <StyledTableRow key={globalUserSearch.id}>
+              <StyledTableCell component="th" scope="row">
+                {globalUserSearch.id}
+              </StyledTableCell>
+              <StyledTableCell align="center">{globalUserSearch.names}</StyledTableCell>
+              <StyledTableCell align="center">{globalUserSearch.destinations}</StyledTableCell>
+              <StyledTableCell align="center">{globalUserSearch.departLocation}</StyledTableCell>
+              <StyledTableCell align="center">{globalUserSearch.tripReason}</StyledTableCell>
+              <StyledTableCell align="center">{globalUserSearch.status}</StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
-};
-
-export default DataTable;
+}
