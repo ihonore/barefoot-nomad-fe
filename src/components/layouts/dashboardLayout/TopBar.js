@@ -28,8 +28,7 @@ import setCurrentUser, {
   setCurrentUserProfile,
 } from '../../../redux/actions/currentUserActions';
 import setUserSearch from '../../../redux/actions/userSearchAction';
-// import useStyles from '../../../views/home/homeStyle';
-// import DataTable from './search/DataTable';
+import DataTable from './search/DataTable';
 
 const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
 const Search = styled('div')(({ theme }) => ({
@@ -54,14 +53,12 @@ const Icons = styled(Box)(({ theme }) => ({
 
 const TopBar = () => {
   const [query, setQuery] = useState('');
-  console.log('query+++++++++++++++++++++++++', query);
   const { globalUserSearch } = useSelector((state) => state.globalUserSearch);
+  const [show, setShow] = useState(false);
 
-  console.log(globalUserSearch.filter((globalUserSearch) => globalUserSearch.tripReason.includes(query)));
-
-  const search = (x) => globalUserSearch.filter((globalUserSearch) => globalUserSearch.tripReason.includes(x));
-
-  console.log('search++++++++++++++++++++++++', search(query));
+  const search = (x) => globalUserSearch.filter(
+    (globalUserSearch) => globalUserSearch.tripReason.includes(x) || globalUserSearch.status.includes(x),
+  );
 
   const dispatch = useDispatch();
   const entireState = useSelector((state) => state);
@@ -199,7 +196,7 @@ const TopBar = () => {
             </Typography>
           </Box>
           <Search>
-            <InputBase placeholder="search..."  onChange={(e) => setQuery(e.target.value)} />
+            <InputBase placeholder="search..." onChange={(e) => setQuery(e.target.value)} onFocus={() => setShow(true)} onBlur={() => setShow(false)} />
             <SearchIcon
               sx={{
                 color: 'white',
