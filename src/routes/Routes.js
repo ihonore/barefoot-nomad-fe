@@ -21,15 +21,15 @@ import SingleTrip from '../components/bookingRooms/SingleTrip';
 import Profile from '../components/profile/profile';
 import ForgotPassword from '../components/resetPassword/forgotPassword';
 import ResetPassword from '../components/resetPassword/resetPassword';
-
-
+import VerifyEmail from '../components/emailVerification/VerifyEmail';
 
 const AllRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
-    <Route path='/forgot-password' element={<ForgotPassword />} />
-    <Route path= '/reset-password/:token' element={<ResetPassword />} />
+    <Route path="/forgot-password" element={<ForgotPassword />} />
+    <Route path="/reset-password/:token" element={<ResetPassword />} />
+    <Route path="/verify-email/:token" element={<VerifyEmail />} />
     <Route
       path="/dashboard"
       element={

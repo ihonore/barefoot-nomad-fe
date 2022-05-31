@@ -12,6 +12,7 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import CloseIcon from '@mui/icons-material/Close';
 import './requestsTable.scss';
 import ConfirmModal from '../confirmModal/ConfirmModal';
+import UpdateTripRequest from '../layouts/TripRequestLayout/updateTripRequest';
 
 const classes = {
   modal: {
@@ -81,7 +82,8 @@ export default function BasicModal(props) {
   const { show, close, tripRequest } = props;
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
   const [confirmModalData, setConfirmModalData] = React.useState('');
-
+  const [tripId, setTripId] = React.useState('');
+  const [openEditModal, setOpenEditModal] = React.useState(false);
   const entireState = useSelector((state) => state);
   const tripRequestsState = entireState.allTripRequests;
   const locationsState = entireState.allLocations;
@@ -93,6 +95,8 @@ export default function BasicModal(props) {
   const currentTripRequest = tripRequests.filter(
     (request) => request.id === tripRequest
   );
+
+  
 
   if (currentTripRequest.length === 1) {
     const {
@@ -334,7 +338,16 @@ export default function BasicModal(props) {
                     </Button>
                   </>
                 ) : currentUser.roleId === 5 ? (
-                  <Button variant="contained" size="medium" color="primary">
+                  <Button
+                   variant="contained"
+                   size="medium" 
+                   color="primary"
+                   onClick={() => {
+                    setTripId(id);
+                    
+                    setOpenEditModal(true);
+                  }}
+                   >
                     {t('Edit')}
                   </Button>
                 ) : (
@@ -378,6 +391,11 @@ export default function BasicModal(props) {
             </ButtonGroup>
           </Box>
         </Modal>
+        <UpdateTripRequest
+            open={openEditModal}
+            close={() => setOpenEditModal(false)}
+            id={id}
+          />
         {confirmModalData && (
           <ConfirmModal
             showModal={showConfirmModal}

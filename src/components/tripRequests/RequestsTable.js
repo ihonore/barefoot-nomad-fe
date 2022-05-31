@@ -246,7 +246,10 @@ const RequestsTable = () => {
             <div style={{ display: 'flex', height: '100%' }}>
               <div style={{ flexGrow: 1 }}>
                 <Button
-                  style={{ marginBottom: 20,display:currentUser.roleId == 5?'flex':'none'}}
+                  style={{
+                    marginBottom: 20,
+                    display: currentUser.roleId == 5 ? 'flex' : 'none',
+                  }}
                   startIcon={<AddIcon />}
                   variant="contained"
                   size="small"
@@ -308,7 +311,7 @@ const RequestsTable = () => {
         }}
       >
         <Typography variant="h5" sx={{ color: 'blue' }}>
-          You don&apos;t have any trip request yet!
+          {t("You don't have any trip request yet!")}
         </Typography>
       </div>
     );

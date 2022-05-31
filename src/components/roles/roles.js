@@ -6,6 +6,7 @@ import {
   usersAction,
   userRoles,
   updateRoles,
+  updateManager
 } from '../../redux/actions/usersAction';
 import { connect } from 'react-redux';
 import { Box } from '@mui/system';
@@ -24,11 +25,16 @@ const Roles = (props) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openManager, setOpenManager] = React.useState(false);
   const handleCloseSnackbar = () => setSnackbar(null);
   const [snackbar, setSnackbar] = React.useState(null);
   const [email, setEmail] = React.useState('');
   const [oldRole, setOldRole] = React.useState('');
   const [newRole, setNewRole] = React.useState('');
+  // const [oldManager, setOldManager] = React.useState('');
+  // const [newManager, setNewManager] = React.useState('');
+  const [userIdentity,setUserIdentity] = React.useState('');
+  const [newManagerId, setNewManagerId] = React.useState('');
 
   const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
   const handleCloseModel = () => {
@@ -44,7 +50,18 @@ const Roles = (props) => {
     return arr;
   };
 
-  const getRoles = roles();
+  const managersFunction = () => {
+    const data = props.users?.managers;
+    const allMangers = data?.managers;
+    let arr= [];
+    for(let i=0; i< allMangers?.length; i++) {
+      arr.push(allMangers[i].email);
+    }
+    return arr;
+  }
+
+
+  // const getRoles = roles();
 
   const columns = [
     {
@@ -107,10 +124,37 @@ const Roles = (props) => {
       width: 250,
       headerClassName: 'super-app-theme--header',
       headerAlign: 'center',
+      renderCell: (params) => (
+        <Autocomplete
+          id="asynchronous-demo"
+          options={managersFunction()}
+          disableClearable
+          value={params.value}
+          onChange={(e) => {
+            setNewManagerId(e.target.outerText)
+            setUserIdentity(params.row.id);
+            processRowUpdateManager();
+          }}
+          onTouchCancelCapture={async () => {
+            setOpen(false);
+            await setSnackbar({
+              children: `Oops, Role can not be null! `,
+              severity: 'error',
+            });
+          }}
+          sx={{ width: '100%', border: 'none' }}
+          style={{ border: 'none', width: '100%' }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              style={{ width: '100%', border: 'none', height: '100%' }}
+            />
+          )}
+        />
+      ), 
     },
   ];
-
-  console.log(email, oldRole, newRole);
+  // console.log(email, oldRole, newRole);
 
   const getRowSpacing = React.useCallback((params) => {
     return {
@@ -118,6 +162,7 @@ const Roles = (props) => {
       bottom: params.isLastVisible ? 0 : 5,
     };
   }, []);
+
 
   const rows = () => {
     let data = props.users.users;
@@ -129,7 +174,7 @@ const Roles = (props) => {
           names: data[i].names,
           email: data[i].email,
           role: data[i].Role.name,
-          manager: data[i].ManagerId.names,
+          manager: data[i].ManagerId.email,
         });
       } else {
         emptyArray.push({
@@ -156,10 +201,24 @@ const Roles = (props) => {
     return false;
   };
 
+  const getEmailId = (emailId) =>{
+    const data = props.users.managers.managers;
+    let allManagers = [];
+    for (let i = 0; i < data?.length; i++) {
+      allManagers = data[i];
+      if (allManagers?.email == emailId) {
+        return allManagers.id;
+    }
+  };
+  }
   // update role
 
   const processRowUpdate = React.useCallback(async () => {
     setOpen(true);
+    return true;
+  });
+  const processRowUpdateManager = React.useCallback(async () => {
+    setOpenManager(true);
     return true;
   });
 
@@ -168,9 +227,9 @@ const Roles = (props) => {
     await setSnackbar({ children: `Role not updated `, severity: 'info' });
   };
 
+
   const handleYes = async () => {
     try {
-      console.log(oldRole);
       const role = getRoleId(newRole);
       if (newRole === undefined) {
         await setSnackbar({
@@ -188,13 +247,31 @@ const Roles = (props) => {
 
       setOpen(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setOpen(false);
       setSnackbar({ children: "Role can't be empty", severity: 'error' });
       setGetRolesMutation(null);
     }
   };
 
+<<<<<<< HEAD
+=======
+  const handleYesManager = async() =>{
+    try {
+      const id = await getEmailId(newManagerId);
+      console.log(id, userIdentity);
+      await updateManager(userIdentity,id,  token);
+      setOpenManager(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleNoManager = () =>{
+    setOpenManager(false);
+  }
+
+>>>>>>> 89845ec (This is a combination of 20 commits.)
   const row = rows();
   useEffect(() => {
     setIsLoading(true);
@@ -212,7 +289,7 @@ const Roles = (props) => {
   }, []);
 
   const handleProcessRowUpdateError = React.useCallback((error) => {
-    console.log(error.message);
+    // console.log(error.message);
   }, []);
 
   return (
@@ -280,6 +357,28 @@ const Roles = (props) => {
           <Button onClick={handleNo}>{t('No')}</Button>
           <Button onClick={handleYes} autoFocus>
             {t('Confirm')}
+<<<<<<< HEAD
+=======
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openManager}
+        onClose={handleNoManager}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {t('are you sure you want to update role?')}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleNoManager}>{t('No')}</Button>
+          <Button onClick={handleYesManager} autoFocus>
+            {t('Confirm')}
+>>>>>>> 89845ec (This is a combination of 20 commits.)
           </Button>
         </DialogActions>
       </Dialog>
