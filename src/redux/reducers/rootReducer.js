@@ -22,6 +22,9 @@ import tripViewReducer from './tripViewReducer';
 import tripRequestReducer from './tripRequestReducer'
 import allLocationsReducer from './allLocationsReducer'
 import AccommodationReviewCreateReducer from './accommodationCreateReviewReducer';
+import bookingRoomReducers from './bookingRoomReducers';
+import BookingConfirmationCreateReducer from './bookingConfirmationReducer';
+import BookingSetAccommodationIdReducer from './bookingSetAccommodationIdReducer';
 
 export default combineReducers({
   mostTravelledLocation: mostTravelledReducer,
@@ -47,4 +50,7 @@ export default combineReducers({
   Locations:allLocationsReducer,
   tripRequest:tripRequestReducer,
   reviewAccommodation: AccommodationReviewCreateReducer,
+  allRooms: bookingRoomReducers,
+  bookingConfrimationCreate: BookingConfirmationCreateReducer,
+  bookingSetAccommodationIdReducer: BookingSetAccommodationIdReducer,
 });

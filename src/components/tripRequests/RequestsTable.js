@@ -16,6 +16,8 @@ import Loader from '../progressBar/Loader';
 import UpdateTripRequest from '../layouts/TripRequestLayout/updateTripRequest';
 import CreateTripRequest from '../layouts/TripRequestLayout/CreateTripRequest';
 import { initialize } from '../../../src/redux/actions/tripRequestActions';
+import { Hotel } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const RequestsTable = () => {
   const [showBasicModal, setShowBasicModal] = useState(false);
@@ -33,12 +35,13 @@ const RequestsTable = () => {
   const tripRequestsState = entireState.allTripRequests;
   const locationsState = entireState.allLocations;
   const curentUserState = entireState.currentUser;
-
   const { currentUser } = curentUserState;
 
   const { tripRequests, loading } = tripRequestsState;
   const { locations } = locationsState;
   const { loaderOpen } = entireState.loader;
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -109,6 +112,21 @@ const RequestsTable = () => {
                 >
                   View
                 </div>
+                {params.row.status == 'approved' && (
+                  <Button
+                    onClick={() => {
+                      navigate(`/tripRequests/${params.row.id}`);
+                    }}
+                    size="small"
+                    color="info"
+                    variant="outlined"
+                    className="bookButton"
+                    endIcon={<Hotel />}
+                  >
+                    Book
+                  </Button>
+                )}
+
                 {params.row.status == 'pending' && (
                   <>
                     <Button
