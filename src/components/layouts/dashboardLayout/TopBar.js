@@ -62,9 +62,12 @@ const TopBar = () => {
   const { globalUserSearch } = useSelector((state) => state.globalUserSearch);
   const [show, setShow] = useState(false);
 
-  const search = (x) => globalUserSearch.filter(
-    (globalUserSearch) => globalUserSearch.tripReason.includes(x) || globalUserSearch.status.includes(x),
-  );
+  const search = (x) =>
+    globalUserSearch.filter(
+      (globalUserSearch) =>
+        globalUserSearch.tripReason.includes(x) ||
+        globalUserSearch.status.includes(x)
+    );
 
   const unreadNotifications = () => {
     const unreads = notifications.filter(
@@ -134,136 +137,138 @@ const TopBar = () => {
       auth: {
         token: token,
       },
-  });
-
-  setSocket(socket);
-  socket?.on('getNotification', (body) => {
-    toast(body, {
-      position: 'top-right',
-      autoClose: 8000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      icon: '🔔',
     });
+
+    setSocket(socket);
+    socket?.on('getNotification', (body) => {
+      toast(body, {
+        position: 'top-right',
+        autoClose: 8000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: '🔔',
+      });
+      dispatch(loadNotifications());
+      console.log('%cTOAST NOTIFICATION', 'background-color:blue', body);
+    });
+
+    console.log('socket///', socket);
     dispatch(loadNotifications());
-    console.log('%cTOAST NOTIFICATION', 'background-color:blue', body);
-  });
+    dispatch(loadLocations());
+  }, []);
 
-  console.log('socket///', socket);
-  dispatch(loadNotifications());
-}, []);
+  useEffect(() => {
+    socket?.on('onconnectTesting1', () => {
+      console.log('%c Server is listening to you', 'background-color:blue');
+    });
+  }, [socket]);
 
-useEffect(() => {
-  socket?.on('onconnectTesting1', () => {
-    console.log('%c Server is listening to you', 'background-color:blue');
-  });
-}, [socket]);
-
-useEffect(()=>{
-  dispatch(setUserSearch())
-  dispatch(loadLocations());
-})
-const { names, roleName } = currentUser;
-return (
-  <>
-    <Box
-      className="Topbar"
-      sx={{
-        height: '12vh',
-        width: '82vw',
-        marginLeft: '18vw',
-        display: 'flex',
-      }}
-    >
-      <Stack
-        direction="row"
-        spacing={2}
-        justifyContent="space-around"
-        alignItems="center"
-        width="100%"
+  const { names, roleName } = currentUser;
+  return (
+    <>
+      <Box
+        className="Topbar"
+        sx={{
+          height: '12vh',
+          width: '82vw',
+          marginLeft: '18vw',
+          display: 'flex',
+        }}
       >
-        <Box>
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            color="#07539F"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            {pathname}
-          </Typography>
-        </Box>
-        <Search>
-          <InputBase placeholder="search..." onChange={(e) => setQuery(e.target.value)} onFocus={() => setShow(true)} onBlur={() => setShow(false)} />
-          <SearchIcon
-            sx={{
-              color: 'white',
-              backgroundColor: '#6674BB',
-              position: 'absolute',
-              right: 0,
-              height: '100%',
-              width: '2.5rem',
-              borderRadius: '5px',
-            }}
-          />
-        </Search> 
-         {/* <SearchBar
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-around"
+          alignItems="center"
+          width="100%"
+        >
+          <Box>
+            <Typography
+              variant="h5"
+              fontWeight="600"
+              color="#07539F"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              {pathname}
+            </Typography>
+          </Box>
+          <Search>
+            <InputBase
+              placeholder="search..."
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setShow(true)}
+              onBlur={() => setShow(false)}
+            />
+            <SearchIcon
+              sx={{
+                color: 'white',
+                backgroundColor: '#6674BB',
+                position: 'absolute',
+                right: 0,
+                height: '100%',
+                width: '2.5rem',
+                borderRadius: '5px',
+              }}
+            />
+          </Search>
+          {/* <SearchBar
           value={searched}
           onChange={(searchVal) => requestSearch(searchVal)}
           onCancelSearch={() => cancelSearch()}
         /> */}
-        <Icons
-          sx={{
-            backgroundColor: { sm: '#CCD4FF' },
-            paddingLeft: { xs: '0.8rem', sm: '1.5rem' },
-            paddingRight: { xs: '0.8rem', sm: '1.5rem' },
-          }}
-        >
-          <Badge
-            badgeContent={unreadNotifications()}
-            color="error"
-            onClick={() => {
-              dispatch(showNotificationPanel());
-            }}
-            sx={{ cursor: 'pointer' }}
-          >
-            <Notifications />
-          </Badge>
-          <Box>
-            <Typography
-              variant="h6"
-              color="#07539F"
-              fontWeight="600"
-              textAlign="center"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              {names}
-            </Typography>
-            <Typography
-              variant="h6"
-              color="#07539F"
-              fontWeight="300"
-              textAlign="center"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              {roleName}
-            </Typography>
-          </Box>
-          <Avatar
+          <Icons
             sx={{
-              width: { xs: 30, sm: 40 },
-              height: { xs: 30, sm: 40 },
-              cursor: 'pointer',
+              backgroundColor: { sm: '#CCD4FF' },
+              paddingLeft: { xs: '0.8rem', sm: '1.5rem' },
+              paddingRight: { xs: '0.8rem', sm: '1.5rem' },
             }}
-            src={currentUserProfile?.picture}
-          />
-        </Icons>
-        {show && <DataTable tableData={search(query)} />}
-      </Stack>
-    </Box>
-  </>
-);
+          >
+            <Badge
+              badgeContent={unreadNotifications()}
+              color="error"
+              onClick={() => {
+                dispatch(showNotificationPanel());
+              }}
+              sx={{ cursor: 'pointer' }}
+            >
+              <Notifications />
+            </Badge>
+            <Box>
+              <Typography
+                variant="h6"
+                color="#07539F"
+                fontWeight="600"
+                textAlign="center"
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+              >
+                {names}
+              </Typography>
+              <Typography
+                variant="h6"
+                color="#07539F"
+                fontWeight="300"
+                textAlign="center"
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+              >
+                {roleName}
+              </Typography>
+            </Box>
+            <Avatar
+              sx={{
+                width: { xs: 30, sm: 40 },
+                height: { xs: 30, sm: 40 },
+                cursor: 'pointer',
+              }}
+              src={currentUserProfile?.picture}
+            />
+          </Icons>
+          {show && <DataTable tableData={search(query)} />}
+        </Stack>
+      </Box>
+    </>
+  );
 };
 
 export default TopBar;
