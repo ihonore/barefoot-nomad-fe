@@ -87,7 +87,7 @@ export default function BasicModal(props) {
 
   const { tripRequests } = tripRequestsState;
   const { currentUser } = currentUserState;
-  const { locations } = locationsState;
+  const { locations } = locationsState;/////////
   const currentTripRequest = tripRequests.filter(
     (request) => request.id === tripRequest,
   );
