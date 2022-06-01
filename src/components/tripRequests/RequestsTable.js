@@ -238,54 +238,58 @@ const RequestsTable = () => {
   if (rows) {
     return (
       <>
-        <div className="datatable">
-          <div style={{ display: 'flex', height: '100%' }}>
-            <div style={{ flexGrow: 1 }}>
-              <Button
-                style={{ marginBottom: 20 }}
-                startIcon=<AddIcon />
-                variant="contained"
-                size="large"
-                onClick={() => setOpenCreateModal(true)}
-              >
-                New Trip
-              </Button>
-              <DataGrid
-                className="datagrid"
-                rows={rows}
-                columns={userColumns}
-                pageSize={9}
-                disableSelectionOnClick
-                sx={{ backgroundColor: 'white' }}
-              />
+        <div>
+          <div className="datatable">
+            <div style={{ display: 'flex', height: '100%' }}>
+              <div style={{ flexGrow: 1 }}>
+                <Button
+                  style={{ marginBottom: 20 }}
+                  startIcon={<AddIcon />}
+                  variant="contained"
+                  size="small"
+                  onClick={() => setOpenCreateModal(true)}
+                >
+                  New Trip
+                </Button>
+                <DataGrid
+                  className="datagrid"
+                  rows={rows}
+                  columns={userColumns}
+                  pageSize={9}
+                  disableSelectionOnClick
+                  sx={{ backgroundColor: 'white' }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <BasicModal
-          show={showBasicModal}
-          close={() => {dispatch(initialize());setShowBasicModal(false)}}
-          tripRequest={currentTripRequest}
-        />
-
-        <UpdateTripRequest
-          open={openEditModal}
-          close={() => setOpenEditModal(false)}
-          id={tripId}
-        />
-        <CreateTripRequest
-          open={openCreateModal}
-          close={() =>  setOpenCreateModal(false)
-          }
-        />
-
-        {confirmModalData && (
-          <ConfirmModal
-            showModal={showConfirmModal}
-            close={() => setShowConfirmModal(false)}
-            modalData={confirmModalData}
+          <BasicModal
+            show={showBasicModal}
+            close={() => {
+              dispatch(initialize());
+              setShowBasicModal(false);
+            }}
+            tripRequest={currentTripRequest}
           />
-        )}
-        {loaderOpen && <Loader />}
+
+          <UpdateTripRequest
+            open={openEditModal}
+            close={() => setOpenEditModal(false)}
+            id={tripId}
+          />
+          <CreateTripRequest
+            open={openCreateModal}
+            close={() => setOpenCreateModal(false)}
+          />
+
+          {confirmModalData && (
+            <ConfirmModal
+              showModal={showConfirmModal}
+              close={() => setShowConfirmModal(false)}
+              modalData={confirmModalData}
+            />
+          )}
+          {loaderOpen && <Loader />}
+        </div>
       </>
     );
   }

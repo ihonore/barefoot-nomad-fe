@@ -84,9 +84,9 @@ const BookingRoomDisplay = (props) => {
     >
       <Container
         sx={{
-          width: '100%',
+          width: '78vw',
           height: 600,
-          marginTop: '-1vh',
+          marginTop: '1vh',
           ml: 35,
 
           '&:hover': {
