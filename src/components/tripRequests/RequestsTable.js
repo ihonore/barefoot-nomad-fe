@@ -1,23 +1,30 @@
 /* eslint-disable */
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
-
+import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import BasicModal from './RequestDetailsModal';
-import { loadTripRequests } from '../../redux/actions/tripRequestsActions';
+import setTripRequests from '../../redux/actions/tripRequestsActions';
 import SkeletonTable from './SkeletonTable';
-import { loadLocations } from '../../redux/actions/locationsActions';
+import setLocations from '../../redux/actions/locationsActions';
 import './requestsTable.scss';
 import ConfirmModal from '../confirmModal/ConfirmModal';
 import Loader from '../progressBar/Loader';
+import UpdateTripRequest from '../layouts/TripRequestLayout/updateTripRequest';
+import CreateTripRequest from '../layouts/TripRequestLayout/CreateTripRequest';
+import { initialize } from '../../../src/redux/actions/tripRequestActions';
 
 const RequestsTable = () => {
   const [showBasicModal, setShowBasicModal] = useState(false);
   const [currentTripRequest, setCurrentTripRequest] = useState('');
+  const [tripId, setTripId] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [confirmModalData, setConfirmModalData] = useState('');
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   let userColumns;
   let rows;
@@ -35,9 +42,32 @@ const RequestsTable = () => {
 
   const dispatch = useDispatch();
 
+  const fetchTripRequests = async () => {
+    console.log('%cLoader', 'background-color:black', loaderOpen);
+    const res = await axios
+      .get('https://elites-barefoot-nomad.herokuapp.com/api/v1/trips', {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    dispatch(setTripRequests(res.data.payload));
+  };
+
+  const fetchLLocations = async () => {
+    const res = await axios
+      .get('https://elites-barefoot-nomad.herokuapp.com/api/v1/locations')
+      .catch((err) => {
+        console.log(err);
+      });
+    dispatch(setLocations(res.data.payload));
+  };
+
   useEffect(() => {
-    dispatch(loadLocations());
-    dispatch(loadTripRequests());
+    fetchTripRequests();
+    fetchLLocations();
   }, []);
 
   userColumns =
@@ -85,9 +115,15 @@ const RequestsTable = () => {
                       variant="primary"
                       size="small"
                       className="editButton"
+                      onClick={() => {
+                        setTripId(params.row.id);
+                        console.log(currentTripRequest, 'current');
+                        setOpenEditModal(true);
+                      }}
                     >
                       Edit
                     </Button>
+
                     <div
                       className="deleteButton"
                       onClick={() => {
@@ -187,6 +223,15 @@ const RequestsTable = () => {
         <div className="datatable">
           <div style={{ display: 'flex', height: '100%' }}>
             <div style={{ flexGrow: 1 }}>
+              <Button
+                style={{ marginBottom: 20 }}
+                startIcon=<AddIcon />
+                variant="contained"
+                size="large"
+                onClick={() => setOpenCreateModal(true)}
+              >
+                New Trip
+              </Button>
               <DataGrid
                 className="datagrid"
                 rows={rows}
@@ -200,9 +245,21 @@ const RequestsTable = () => {
         </div>
         <BasicModal
           show={showBasicModal}
-          close={() => setShowBasicModal(false)}
+          close={() => {dispatch(initialize());setShowBasicModal(false)}}
           tripRequest={currentTripRequest}
         />
+
+        <UpdateTripRequest
+          open={openEditModal}
+          close={() => setOpenEditModal(false)}
+          id={tripId}
+        />
+        <CreateTripRequest
+          open={openCreateModal}
+          close={() =>  setOpenCreateModal(false)
+          }
+        />
+
         {confirmModalData && (
           <ConfirmModal
             showModal={showConfirmModal}

@@ -19,6 +19,8 @@ import notificationsReducer from './notificationsReducer';
 import notificationPanelReducer from './notificationPanelReducer';
 import singleTripRequestReducer from './singleTripRequestReducer';
 import tripViewReducer from './tripViewReducer';
+import tripRequestReducer from './tripRequestReducer'
+import allLocationsReducer from './allLocationsReducer'
 
 export default combineReducers({
   mostTravelledLocation: mostTravelledReducer,
@@ -41,4 +43,6 @@ export default combineReducers({
   users: usersReducers,
   allNotifications: notificationsReducer,
   notificationPanel: notificationPanelReducer,
+  Locations:allLocationsReducer,
+  tripRequest:tripRequestReducer,
 });
