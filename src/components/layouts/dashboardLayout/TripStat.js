@@ -12,10 +12,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import {
-  Typography, Button,
-  Container,
-} from '@mui/material';
+import { Typography, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import setTripStatics from '../../../redux/actions/landingDashboardActions';
 import Loader from '../../home/loader';
@@ -37,12 +34,11 @@ function TripStat(props) {
     }
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // setLoading(true);
     dispatch(setTripStatics(startDate, endDate));
-  }
+  };
 
   const tripStatisticsState = useSelector((state) => state.tripStatistics);
   const pendingArray = [];
@@ -68,8 +64,8 @@ function TripStat(props) {
   return (
     <>
       <div className="tripStatistics">
+        <Typography mt={-2}>Filter From: </Typography>
         <div className="dates">
-          <Typography>Filter From: </Typography>
           <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateRangePicker
@@ -77,11 +73,28 @@ function TripStat(props) {
                 value={value}
                 onChange={(newValue) => setValue(newValue)}
                 renderInput={(startProps, endProps) => (
-                  <form onSubmit={handleSubmit}>
-                    <input type="text" id="startDate" placeholder="yyyy-mm-dd" onChange={handleChangeDate} />
+                  <form
+                    onSubmit={handleSubmit}
+                    style={{
+                      display: 'flex',
+                      marginBottom: '1rem',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <input
+                      type="text"
+                      id="startDate"
+                      placeholder="yyyy-mm-dd"
+                      onChange={handleChangeDate}
+                    />
                     <Box sx={{ mx: 1 }}> to </Box>
-                    <input type="text" id="endDate" placeholder="yyyy-mm-dd" onChange={handleChangeDate} />
-                    <button type="submit" className="btn">SEND</button>
+                    <input
+                      type="text"
+                      id="endDate"
+                      placeholder="yyyy-mm-dd"
+                      onChange={handleChangeDate}
+                    />
+                    <Button variant="contained" type="submit" className="btn" sx={{width:50, marginLeft: 1}} >SEND</Button>
                   </form>
                 )}
               />
@@ -95,7 +108,11 @@ function TripStat(props) {
             series={[
               {
                 name: 'LABELS',
-                data: [pendingArray.length, approvedArray.length, rejectedArray.length],
+                data: [
+                  pendingArray.length,
+                  approvedArray.length,
+                  rejectedArray.length,
+                ],
               },
             ]}
             options={{
@@ -109,7 +126,6 @@ function TripStat(props) {
               background: {
                 color: '#fffff',
               },
-
             }}
           />
         </div>

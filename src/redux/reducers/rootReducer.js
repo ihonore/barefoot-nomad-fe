@@ -22,10 +22,12 @@ import tripViewReducer from './tripViewReducer';
 import tripRequestReducer from './tripRequestReducer'
 import allLocationsReducer from './allLocationsReducer'
 import AccommodationReviewCreateReducer from './accommodationCreateReviewReducer';
+import globalUserSearchReducer from './userSearchReducer';
 
 export default combineReducers({
   mostTravelledLocation: mostTravelledReducer,
   tripStatistics: landingDashboardReducers,
+  globalUserSearch: globalUserSearchReducer,
   allAccommodations: accommodationReducer,
   allTripRequests: tripRequestsReducer,
   singleTrip: singleTripRequestReducer,
@@ -48,3 +50,5 @@ export default combineReducers({
   tripRequest:tripRequestReducer,
   reviewAccommodation: AccommodationReviewCreateReducer,
 });
+
+
