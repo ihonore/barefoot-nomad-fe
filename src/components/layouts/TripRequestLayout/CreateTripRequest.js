@@ -152,7 +152,7 @@ const CreateTripRequest = (props) => {
               gutterBottom
               sx={{ margin: 3, textAlign: 'left' }}
             >
-              <strong>N.B:</strong> Below is a read only overview of your tip
+              <strong>N.B:</strong> Below is a read only overview of your trip
               request before submission, to change some of the trip details,
               click the previous button
             </Typography>
@@ -200,7 +200,7 @@ const CreateTripRequest = (props) => {
       open={props.open}
       onClose={() => props.close()}
       sx={{
-        overflow: 'scroll',
+        overFlow: 'scroll',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -213,13 +213,17 @@ const CreateTripRequest = (props) => {
         component="div"
         className="box"
         sx={{
+          overflow: 'scroll',
           position: 'relative',
           background: 'white',
           width: '70vw',
+          minWidth:'60vw',
+          height:'80vh',
           borderRadius: 3,
           marginLeft: '200px',
           marginRight: '200px',
-          marginBottom: '100px',
+          padding:'40px',
+
         }}
       >
         <CloseIcon sx={closeIcon} onClick={() => props.close()} />
