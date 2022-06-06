@@ -68,7 +68,6 @@ const TopBar = () => {
         globalUserSearch.tripReason.includes(x) ||
         globalUserSearch.status.includes(x) ||
         globalUserSearch.names.includes(x)
-      
     );
 
   const unreadNotifications = () => {
@@ -191,7 +190,7 @@ const TopBar = () => {
               variant="h5"
               fontWeight="600"
               color="#07539F"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
+              sx={{ display: 'none' }}
             >
               {pathname}
             </Typography>

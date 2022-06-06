@@ -29,6 +29,8 @@ import BookingConfirmationCreateReducer from './bookingConfirmationReducer';
 import BookingSetAccommodationIdReducer from './bookingSetAccommodationIdReducer';
 import BookingConfirmationSetTripIdReducer from './bookingConfirmationSetTripIdReducer';
 import profileReducer from './profileReducer';
+import likeAccommodations from './likeAccommodationCreateReducer';
+import dislikeAccommodationCreateReducer from './dislikeAccommodationCreateReducer';
 
 export default combineReducers({
   mostTravelledLocation: mostTravelledReducer,
@@ -60,5 +62,7 @@ export default combineReducers({
   bookingConfrimationCreate: BookingConfirmationCreateReducer,
   bookingSetAccommodationIdReducer: BookingSetAccommodationIdReducer,
   bookingConfirmationSetTripIdReducer: BookingConfirmationSetTripIdReducer,
-  profile:profileReducer,
+  profile: profileReducer,
+  like: likeAccommodations,
+  dislike: dislikeAccommodationCreateReducer,
 });

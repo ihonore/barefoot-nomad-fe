@@ -53,7 +53,7 @@ const columns = [
       const [open, setOpen] = useState(false);
       const [openD, setOpenD] = useState(false);
       const [openU, setOpenU] = useState(false);
-
+     
       return (
         <div>
           <AccommodationDeleteModal
