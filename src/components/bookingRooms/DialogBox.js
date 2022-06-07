@@ -11,10 +11,12 @@ import axios from 'axios';
 
 import BookingConfirmationForm from './BookingConfirmationForm';
 import { createBookingRoom } from '../../redux/actions/bookingConfirmationActions';
+import { useTranslation } from 'react-i18next';
 
 function ConfirmationFormDialog(props) {
   const availability = props.availability;
   const room = props.roomData;
+  const { t } = useTranslation();
 
   const [open, setOpen] = React.useState(false);
 
@@ -50,7 +52,7 @@ function ConfirmationFormDialog(props) {
           onClick={handleClickOpen}
           sx={{ mr: 5 }}
         >
-          Book Now
+          {t('Book Now')}
         </Button>
       ) : (
         <Button
@@ -60,7 +62,7 @@ function ConfirmationFormDialog(props) {
           onClick={handleClickOpen}
           sx={{ mr: 5 }}
         >
-          Booked
+          {t('Booked')}
         </Button>
       )}
       <Dialog open={open} onClose={handleClickOpen}>
@@ -76,7 +78,7 @@ function ConfirmationFormDialog(props) {
             color="warning"
             style={{ marginTop: -55 }}
           >
-            Cancel
+            {t('Cancel')}
           </Button>
         </DialogActions>
       </Dialog>

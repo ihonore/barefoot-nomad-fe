@@ -19,6 +19,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Modal from '@mui/material/Modal';
 import { loadTripRequests } from '../../../redux/actions/tripRequestsActions';
 import { Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const closeIcon = {
   position: 'absolute',
@@ -46,6 +47,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CreateTripRequest = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const tripRequest = useSelector((state) => state.tripRequest);
   const allLocations = useSelector((state) => state.allLocations);
@@ -144,7 +146,7 @@ const CreateTripRequest = (props) => {
               gutterBottom
               sx={{ margin: 3, fontWeight: 600, textAlign: 'center' }}
             >
-              TRIP REQUEST FINAL REVIEW
+              {t('TRIP REQUEST FINAL REVIEW')}
             </Typography>
 
             <Typography
@@ -152,9 +154,10 @@ const CreateTripRequest = (props) => {
               gutterBottom
               sx={{ margin: 3, textAlign: 'left' }}
             >
-              <strong>N.B:</strong> Below is a read only overview of your trip
-              request before submission, to change some of the trip details,
-              click the previous button
+              <strong>N.B:</strong>{' '}
+              {t(
+                'Below is a read only overview of your tip request before submission, to change some of the trip details, click the previous button'
+              )}
             </Typography>
             <StepOne />
             <StepTwo />
@@ -180,7 +183,7 @@ const CreateTripRequest = (props) => {
                   borderColor: 'white',
                 }}
               >
-                SUBMIT
+                {t('SUBMIT')}
               </LoadingButton>
             </div>
           </>
@@ -217,13 +220,12 @@ const CreateTripRequest = (props) => {
           position: 'relative',
           background: 'white',
           width: '70vw',
-          minWidth:'60vw',
-          height:'80vh',
+          minWidth: '60vw',
+          height: '80vh',
           borderRadius: 3,
           marginLeft: '200px',
           marginRight: '200px',
-          padding:'40px',
-
+          padding: '40px',
         }}
       >
         <CloseIcon sx={closeIcon} onClick={() => props.close()} />
@@ -250,17 +252,17 @@ const CreateTripRequest = (props) => {
             gutterBottom
             sx={{ margin: 3, fontSize: 22, fontWeight: 800 }}
           >
-            TRIP REQUEST FORM
+            {t('TRIP REQUEST FORM')}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.root}>
             <Step>
-              <StepLabel>First</StepLabel>
+              <StepLabel>{t('First')}</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Second</StepLabel>
+              <StepLabel>{t('Second')}</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Third</StepLabel>
+              <StepLabel>{t('Third')}</StepLabel>
             </Step>
           </Stepper>
 
@@ -288,7 +290,7 @@ const CreateTripRequest = (props) => {
                 }}
                 style={{ display: activeStep < 1 ? 'none' : 'block' }}
               >
-                Previous
+                {t('Previous')}
               </Button>
             </div>
             <div
@@ -308,7 +310,7 @@ const CreateTripRequest = (props) => {
                 }}
                 style={{ display: activeStep == 2 ? 'none' : 'flex' }}
               >
-                Next
+                {t('Next')}
               </Button>
             </div>
           </div>

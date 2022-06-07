@@ -68,7 +68,6 @@ const TopBar = () => {
         globalUserSearch.tripReason.includes(x) ||
         globalUserSearch.status.includes(x) ||
         globalUserSearch.names.includes(x)
-      
     );
 
   const unreadNotifications = () => {
@@ -136,6 +135,7 @@ const TopBar = () => {
     getCurrentUser();
     const socket = io('https://elites-barefoot-nomad.herokuapp.com', {
       reconnectionDelayMax: 10000,
+      reconnection: true,
       auth: {
         token: token,
       },
@@ -193,7 +193,7 @@ const TopBar = () => {
               color="#07539F"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              {pathname}
+              {/* {pathname} */}
             </Typography>
           </Box>
           <Search>
@@ -215,11 +215,6 @@ const TopBar = () => {
               }}
             />
           </Search>
-          {/* <SearchBar
-          value={searched}
-          onChange={(searchVal) => requestSearch(searchVal)}
-          onCancelSearch={() => cancelSearch()}
-        /> */}
           <Icons
             sx={{
               backgroundColor: { sm: '#CCD4FF' },

@@ -20,8 +20,10 @@ import {
 import { loadSingleTripRequest } from '../../redux/actions/singleTripRequestActions';
 import { openViewTrip } from '../../redux/actions/tripViewAction';
 import { loadLocations } from '../../redux/actions/locationsActions';
+import { useTranslation } from 'react-i18next';
 
 const NotificationsContainer = () => {
+  const { t } = useTranslation();
   const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
   const dispatch = useDispatch();
   const box = useRef(null);
@@ -101,7 +103,7 @@ const NotificationsContainer = () => {
           }}
         >
           {notifications.length === 0 ? (
-            <Typography>No notifications</Typography>
+            <Typography>{t('No notifications')}</Typography>
           ) : (
             <Box
               sx={{
@@ -140,7 +142,7 @@ const NotificationsContainer = () => {
                       dispatch(markAllAsRead(token));
                     }}
                   >
-                    Mark all as Read
+                    {t('Mark all as Read')}
                   </Button>
                 </Box>
                 <Stack>
@@ -152,7 +154,9 @@ const NotificationsContainer = () => {
                         bgcolor={notification.isRead ? 'white' : '#E5EAFF'}
                         sx={{
                           cursor: 'pointer',
-                          '&:hover': { backgroundColor: 'rgb(204, 212, 255)' },
+                          '&:hover': {
+                            borderLeft: '4px solid rgb(49, 75, 232)',
+                          },
                         }}
                         key={notification.id}
                         onClick={() => {

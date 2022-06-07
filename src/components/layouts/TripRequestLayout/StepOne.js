@@ -14,7 +14,7 @@ import {
   setStepOneDepartDate,
   setStepOneReturnDate,
   addMulticity,
-  updateTripRequest
+  updateTripRequest,
 } from '../../../redux/actions/tripRequestActions';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,7 +22,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Select from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
-import './tripRequestStyles.scss'
+import './tripRequestStyles.scss';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -30,19 +31,19 @@ const useStyles = makeStyles((theme) => {
       '& .MuiTextField-root': {
         margin: 8,
         maxWidth: '280px',
-        minWidth:'200px'
+        minWidth: '200px',
       },
     },
   };
 });
 
 const StepOne = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const locationState = useSelector((state) => state.Locations);
   const tripRequest = useSelector((state) => state.tripRequest);
   const blueColor = { backgroundColor: '#07539F' };
   const classes = useStyles();
-  
 
   const fetchLocations = async () => {
     const res = await axios
@@ -62,7 +63,6 @@ const StepOne = (props) => {
 
     return dispatch(getAccomodations(res.data.payload));
   };
-
 
   const handleChangeInput = (index, event) => {
     event.preventDefault();
@@ -96,30 +96,28 @@ const StepOne = (props) => {
   return (
     <div>
       <Typography
-        align =  'center'
+        align="center"
         variant="body1"
         gutterBottom
         sx={{ margin: 3, textDecoration: 'underline', fontWeight: 600 }}
       >
-        STEP ONE
+        {t('STEP ONE')}
       </Typography>
 
       <Typography
-        align =  'center'
+        align="center"
         variant="body1"
         gutterBottom
         sx={{ margin: 3, textAlign: 'left' }}
         style={{ display: props.active === undefined ? 'none' : 'flex' }}
       >
-        Fill in your departure location, destination and an accomodation you
-        will be staying in during your travel respectively from the field
-        dropdowns below, also fill in both the dates of your departure and
-        return .
+        {t(
+          'Fill in your departure location, destination and an accomodation you will be staying in during your travel respectively from the field dropdowns below, also fill in both the dates of your departure and return.'
+        )}
       </Typography>
 
       {tripRequest.stepOne.requests &&
         tripRequest.stepOne.requests.map((inputField, index, array) => {
-          
           return (
             <div
               key={index}
@@ -130,7 +128,7 @@ const StepOne = (props) => {
                 marginRight: 20,
                 backgroundColor: '#E5EAFF',
                 borderRadius: 10,
-                width:'fit-content'
+                width: 'fit-content',
               }}
             >
               <TextField
@@ -138,9 +136,13 @@ const StepOne = (props) => {
                 label="Depart location"
                 select
                 sx={{
-                  width:'18vw',             
+                  width: '18vw',
                 }}
-                value={ index-1 < 0 ? inputField.departLocation:array[index - 1].destination }
+                value={
+                  index - 1 < 0
+                    ? inputField.departLocation
+                    : array[index - 1].destination
+                }
                 inputProps={{
                   readOnly: props.active == undefined ? true : false,
                 }}
@@ -150,7 +152,6 @@ const StepOne = (props) => {
                 }}
                 variant="standard"
               >
-                
                 {locationState.locations &&
                   locationState.locations.map((location) => (
                     <MenuItem key={location.id} value={location.id}>
@@ -167,7 +168,7 @@ const StepOne = (props) => {
                 name="destination"
                 variant="standard"
                 sx={{
-                  width:'18vw'
+                  width: '18vw',
                 }}
                 inputProps={{
                   readOnly: props.active == undefined ? true : false,
@@ -195,7 +196,7 @@ const StepOne = (props) => {
                 name="accomodation"
                 variant="standard"
                 sx={{
-                  width:'18vw'
+                  width: '18vw',
                 }}
                 inputProps={{
                   readOnly: props.active == undefined ? true : false,
@@ -205,9 +206,7 @@ const StepOne = (props) => {
                 {locationState.locations &&
                   locationState.accomodations
                     .filter((accomodation) => {
-                      return (
-                        accomodation.locationId === inputField.destination
-                      );
+                      return accomodation.locationId === inputField.destination;
                     })
                     .map((accomodation) => (
                       <MenuItem key={accomodation.id} value={accomodation.id}>
@@ -220,7 +219,7 @@ const StepOne = (props) => {
         })}
       <br />
       <div
-        className='destinationBtn'
+        className="destinationBtn"
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -228,7 +227,6 @@ const StepOne = (props) => {
         }}
       >
         <Button
-        
           variant="contained"
           sx={{
             margin: 5,
@@ -238,7 +236,7 @@ const StepOne = (props) => {
           style={{ display: props.active == undefined ? 'none' : 'flex' }}
           onClick={() => handleAddFields()}
         >
-          ADD DESTINATION
+          {t('ADD DESTINATION')}
         </Button>
         <Button
           variant="contained"
@@ -250,7 +248,7 @@ const StepOne = (props) => {
           onClick={() => handleRemoveFields()}
           style={{ display: props.active == undefined ? 'none' : 'flex' }}
         >
-          REMOVE DESTINATION
+          {t('REMOVE DESTINATION')}
         </Button>
       </div>
       <div
@@ -260,66 +258,60 @@ const StepOne = (props) => {
           justifyContent: 'center',
         }}
       >
-
-<LocalizationProvider dateAdapter={AdapterDateFns}>
-
-
-        <div
-         className = 'datePicker'
-          style = {{
-            display:'flex',
-            justifyContent: 'space-around',
-            alignSelf: 'center',
-
-          }}
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <div
+            className="datePicker"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignSelf: 'center',
+            }}
           >
-
-        
-          <DesktopDatePicker
-            readOnly = {props.active == undefined ? true : false}            
-            disableMaskedInput
-            value={tripRequest.stepOne.departDate}
-            onChange={(date) => {
-              dispatch(
-                setStepOneDepartDate(new Date(date).toISOString().split('T')[0])
-              );
-            }}
-            label="Departure date"
-            minDate={new Date()}
-            renderInput={(params) => (
-              <TextField
-                style={{ marginBottom: 30,marginRight:20  }}
-                {...params}
-                onKeyDown={(e) => {
-                  e.preventDefault();
-                }}
-              />
-            )}
-          />
-          <DesktopDatePicker
-            readOnly = {props.active == undefined ? true : false} 
-            disableMaskedInput
-            value={tripRequest.stepOne.returnDate}
-            onChange={(date) => {
-              dispatch(
-                setStepOneReturnDate(new Date(date).toISOString().split('T')[0])
-              );
-            }}
-            label="Return Date"
-            minDate={new Date(tripRequest.stepOne.departDate)}
-            renderInput={(params) => (
-              <TextField
-                
-                style={{ marginBottom: 30 ,marginRight:20}}
-                {...params}
-              />
-            )}
-          />
-
-           </div>
+            <DesktopDatePicker
+              readOnly={props.active == undefined ? true : false}
+              disableMaskedInput
+              value={tripRequest.stepOne.departDate}
+              onChange={(date) => {
+                dispatch(
+                  setStepOneDepartDate(
+                    new Date(date).toISOString().split('T')[0]
+                  )
+                );
+              }}
+              label="Departure date"
+              minDate={new Date()}
+              renderInput={(params) => (
+                <TextField
+                  style={{ marginBottom: 30, marginRight: 20 }}
+                  {...params}
+                  onKeyDown={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+              )}
+            />
+            <DesktopDatePicker
+              readOnly={props.active == undefined ? true : false}
+              disableMaskedInput
+              value={tripRequest.stepOne.returnDate}
+              onChange={(date) => {
+                dispatch(
+                  setStepOneReturnDate(
+                    new Date(date).toISOString().split('T')[0]
+                  )
+                );
+              }}
+              label="Return Date"
+              minDate={new Date(tripRequest.stepOne.departDate)}
+              renderInput={(params) => (
+                <TextField
+                  style={{ marginBottom: 30, marginRight: 20 }}
+                  {...params}
+                />
+              )}
+            />
+          </div>
         </LocalizationProvider>
-
-       
       </div>
     </div>
   );

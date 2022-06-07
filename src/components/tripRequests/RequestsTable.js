@@ -18,8 +18,10 @@ import CreateTripRequest from '../layouts/TripRequestLayout/CreateTripRequest';
 import { initialize } from '../../../src/redux/actions/tripRequestActions';
 import { Hotel } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const RequestsTable = () => {
+  const { t } = useTranslation();
   const [showBasicModal, setShowBasicModal] = useState(false);
   const [currentTripRequest, setCurrentTripRequest] = useState('');
   const [tripId, setTripId] = useState('');
@@ -110,7 +112,7 @@ const RequestsTable = () => {
                     setShowBasicModal(true);
                   }}
                 >
-                  View
+                  {t('View')}
                 </div>
                 {params.row.status == 'approved' && (
                   <Button
@@ -123,7 +125,7 @@ const RequestsTable = () => {
                     className="bookButton"
                     endIcon={<Hotel />}
                   >
-                    Book
+                    {t('Book')}
                   </Button>
                 )}
 
@@ -139,22 +141,23 @@ const RequestsTable = () => {
                         setOpenEditModal(true);
                       }}
                     >
-                      Edit
+                      {t('Edit')}
                     </Button>
 
                     <div
                       className="deleteButton"
                       onClick={() => {
                         setConfirmModalData({
-                          message:
-                            'Are you sure you want to delete this trip request?',
+                          message: t(
+                            'Are you sure you want to delete this trip request?'
+                          ),
                           action: 'delete',
                           id: params.row.id,
                         });
                         setShowConfirmModal(true);
                       }}
                     >
-                      Delete
+                      {t('Delete')}
                     </div>
                   </>
                 )}
@@ -208,7 +211,7 @@ const RequestsTable = () => {
                     setShowBasicModal(true);
                   }}
                 >
-                  View
+                  {t('View')}
                 </div>
               </div>
             ),
@@ -249,7 +252,7 @@ const RequestsTable = () => {
                   size="small"
                   onClick={() => setOpenCreateModal(true)}
                 >
-                  New Trip
+                  {t('New Trip')}
                 </Button>
                 <DataGrid
                   className="datagrid"

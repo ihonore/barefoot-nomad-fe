@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { useTranslation } from 'react-i18next';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { Typography, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function TripStat(props) {
   const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
+  const { t } = useTranslation();
   const [value, setValue] = React.useState(['', '']);
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState('1990-10-10');
@@ -42,9 +44,9 @@ function TripStat(props) {
   };
 
   const tripStatisticsState = useSelector((state) => state.tripStatistics);
-  
+
   useEffect(() => {
-      dispatch(setTripStatics(startDate, endDate, token));
+    dispatch(setTripStatics(startDate, endDate, token));
   }, []);
 
   const pendingArray = [];
@@ -66,7 +68,7 @@ function TripStat(props) {
   return (
     <>
       <div className="tripStatistics">
-        <Typography mt={-2}>Filter From: </Typography>
+        <Typography mt={-2}>{t('Filter From:')} </Typography>
         <div className="dates">
           <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -102,7 +104,7 @@ function TripStat(props) {
                       className="btn"
                       sx={{ width: 50, marginLeft: 1 }}
                     >
-                      SEND
+                      {t('SEND')}
                     </Button>
                   </form>
                 )}

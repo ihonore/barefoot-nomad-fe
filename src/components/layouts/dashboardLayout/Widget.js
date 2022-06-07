@@ -7,8 +7,10 @@ import { MdNorthEast } from 'react-icons/md';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import setTripStatics from '../../../redux/actions/landingDashboardActions';
+import { useTranslation } from 'react-i18next';
 
 const Widget = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const tripStatisticsState = useSelector((state) => state.tripStatistics);
   const pendingArray = [];
@@ -61,7 +63,7 @@ const Widget = () => {
     <div className="AllWidget">
       <section className="WidgetCard">
         <div className="widget">
-          <p>Total Pending Requests</p>
+          <p>{t('Total Pending Requests')}</p>
           <p> {pendingArray.length} </p>
           <div className="MdNorthEastContainer">
             <MdNorthEast
@@ -82,7 +84,7 @@ const Widget = () => {
 
       <section className="WidgetCard">
         <div className="widget">
-          <p>Total approved Requests</p>
+          <p>{t('Total approved Requests')}</p>
           <p> {approvedArray.length} </p>
           <div className="MdNorthEastContainer">
             <MdNorthEast
@@ -103,7 +105,7 @@ const Widget = () => {
 
       <section className="WidgetCard">
         <div className="widget">
-          <p>Total Rejected Requests</p>
+          <p>{t('Total Rejected Requests')}</p>
           <p> {rejectedArray.length} </p>
           <div className="MdNorthEastContainer">
             <MdNorthEast

@@ -1,13 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createRoot from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@emotion/react';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
 import store from './redux/store';
 import theme from './theme';
+import { resources } from '../src/components/i18next/resources';
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(LanguageDetector)
+  .init({
+    supportedLngs: ['en', 'fr', 'kin'],
+    resources,
+    fallbackLng: 'en',
+    detection: {
+      order: ['cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
+      caches: ['cookie'],
+    },
+  });
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +33,7 @@ ReactDOM.render(
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 module.hot.accept();
 

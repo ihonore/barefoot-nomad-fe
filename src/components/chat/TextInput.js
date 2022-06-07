@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import SendIcon from '@mui/icons-material/Send';
 import { Button } from '@mui/material';
 import TextField from '@material-ui/core/TextField';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   wrapForm: {
@@ -22,18 +23,19 @@ const useStyles = makeStyles({
 });
 
 export const TextInput = (props) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   return (
     <>
       <form
         className={classes.wrapForm}
         validate
-        onSubmit={(e)=>e.preventDefault()}
+        onSubmit={(e) => e.preventDefault()}
         autoComplete="off"
       >
         <TextField
           id="fullWidth"
-          label="Type message"
+          label={t('Type message')}
           className={classes.wrapText}
           variant="filled"
           onChange={props.onChange}

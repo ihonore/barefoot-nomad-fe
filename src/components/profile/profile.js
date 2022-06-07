@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -36,7 +37,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Modal from '@mui/material/Modal';
 import './profile.scss';
 import Loader from '../../views/home/loader';
-
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -102,6 +102,7 @@ function profile() {
   const [loadingTwo, setLoadingTwo] = React.useState(false);
   const [image, setImage] = React.useState(null);
   const [newProfile, setNewProfile] = React.useState('no');
+  const { t } = useTranslation();
   const [showCreateProfileModal, setShowCreateProfileModal] =
     React.useState(false);
 
@@ -322,7 +323,7 @@ function profile() {
             height: 'fit-content',
           }}
         >
-          PROFILE DETAILS
+          {t('PROFILE DETAILS')}
         </Typography>
 
         <Box
@@ -365,7 +366,7 @@ function profile() {
               startIcon={<FileUploadIcon />}
               variant="contained"
             >
-              Upload Image
+              {t('Upload Image')}
               <input type="file" hidden onChange={handleImage} />
             </Button>
           </label>
@@ -379,9 +380,9 @@ function profile() {
               } else if (profile.role == 2) {
                 return 'TRAVEL ADMIN';
               } else if (profile.role == 3) {
-                return 'ACCOMODATION SUPPLIER';
-              } else if (profile.role == 4) {
                 return 'MANAGER';
+              } else if (profile.role == 4) {
+                return 'ACCOMODATION SUPPLIER';
               } else {
                 return 'REQUESTER';
               }
@@ -401,7 +402,7 @@ function profile() {
               borderColor: 'white',
             }}
           >
-            EDIT PROFILE
+            {t('EDIT PROFILE')}
           </Button>
 
           <LoadingButton
@@ -420,7 +421,7 @@ function profile() {
               borderColor: 'white',
             }}
           >
-            SAVE CHANGES
+            {t('SAVE CHANGES')}
           </LoadingButton>
         </Box>
 
@@ -432,17 +433,23 @@ function profile() {
               display: change == true ? 'none' : 'block',
             }}
           >
-            <StackedTypography header="NAMES" body={profile.names} />
-            <StackedTypography header="EMAIL" body={profile.email} />
-            <StackedTypography header="GENDER" body={profile.gender} />
-            <StackedTypography header="ADDRESS" body={profile.address} />
-            <StackedTypography header="CURRENCY" body={profile.currency} />
-            <StackedTypography header="DEPARTMENT" body={profile.department} />
+            <StackedTypography header={t('NAMES')} body={profile.names} />
+            <StackedTypography header={t('EMAIL')} body={profile.email} />
+            <StackedTypography header={t('GENDER')} body={profile.gender} />
+            <StackedTypography header={t('ADDRESS')} body={profile.address} />
+            <StackedTypography header={t('CURRENCY')} body={profile.currency} />
             <StackedTypography
-              header="PASSPORT"
+              header={t('DEPARTMENT')}
+              body={profile.department}
+            />
+            <StackedTypography
+              header={t('PASSPORT')}
               body={profile.passportNumber}
             />
-            <StackedTypography header="BIRTHDATE" body={profile.birthdate} />
+            <StackedTypography
+              header={t('BIRTHDATE')}
+              body={profile.birthdate}
+            />
           </Box>
           <Box
             component="div"
@@ -475,7 +482,7 @@ function profile() {
               />
 
               <TextField
-                label="gender"
+                label={t('gender')}
                 variant="outlined"
                 value={`${!profile.gender ? '' : profile.gender}`}
                 sx={{
@@ -489,7 +496,7 @@ function profile() {
                 inputProps={{ readOnly: change == true ? false : true }}
               />
               <TextField
-                label="address"
+                label={t('address')}
                 variant="outlined"
                 value={`${!profile.address ? '' : profile.address}`}
                 sx={{
@@ -503,7 +510,7 @@ function profile() {
               />
 
               <TextField
-                label="language"
+                label={t('language')}
                 variant="outlined"
                 value={`${!profile.language ? '' : profile.language}`}
                 sx={{
@@ -526,7 +533,7 @@ function profile() {
               }}
             >
               <TextField
-                label="currency"
+                label={t('currency')}
                 variant="outlined"
                 value={`${!profile.currency ? '' : profile.currency}`}
                 sx={{
@@ -544,7 +551,7 @@ function profile() {
               />
 
               <TextField
-                label="department"
+                label={t('department')}
                 variant="outlined"
                 value={`${!profile.department ? '' : profile.department}`}
                 sx={{
@@ -562,7 +569,7 @@ function profile() {
               />
 
               <TextField
-                label="passport"
+                label={t('passport')}
                 variant="outlined"
                 value={`${
                   !profile.passportNumber ? '' : profile.passportNumber
@@ -593,7 +600,7 @@ function profile() {
                       setBirthdate(new Date(date).toISOString().split('T')[0])
                     );
                   }}
-                  label="Birthdate"
+                  label={t('Birthdate')}
                   maxDate={new Date()}
                   renderInput={(params) => (
                     <TextField
@@ -642,243 +649,254 @@ function profile() {
           height: '100vh',
         }}
       >
-         <div
-          style={{ backgroundColor: 'white',textAlign:'center' ,padding:'20px'}}>
-         <Typography variant = 'h5' color = '#07539F'> You do not have a profile, create one to proceed!</Typography>
-
-            
         <div
-          className="box1"
-          style={{ display: 'flex', backgroundColor: 'white', padding: '50px' }}
+          style={{
+            backgroundColor: 'white',
+            textAlign: 'center',
+            padding: '20px',
+          }}
         >
-          <Box
-            component="div"
+          <Typography variant="h5" color="#07539F">
+            {' '}
+            {t('You do not have a profile, create one to proceed!')}
+          </Typography>
+
+          <div
+            className="box1"
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              backgroundColor: 'white',
+              padding: '50px',
             }}
           >
-            <img
-              className="img"
+            <Box
+              component="div"
               style={{
-                alignSelf: 'center',
-                height: '35vh',
-                width: '17.5vw',
-                marginTop: '32px',
-                marginRight: '2rem',
-                marginLeft: '1rem',
-                borderRadius: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
-              alt="Profile picture"
-              src="https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png"
-            />
-
-            <label htmlFor="contained-button-file">
-              <Input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-              />
-              <Button
-                component="label"
+            >
+              <img
+                className="img"
                 style={{
-                  marginTop: '20px',
+                  alignSelf: 'center',
+                  height: '35vh',
+                  width: '17.5vw',
+                  marginTop: '32px',
+                  marginRight: '2rem',
+                  marginLeft: '1rem',
+                  borderRadius: '1rem',
                 }}
-                startIcon={<FileUploadIcon />}
-                variant="contained"
-              >
-                Upload Image
-                <input type="file" hidden onChange={handleImage} />
-              </Button>
-            </label>
-
-            <LoadingButton
-              className="buttonOne"
-              loading={loading}
-              onClick={async () => {
-                const res = await createProfile();
-              }}
-              variant="contained"
-              sx={{
-                width: 180,
-                marginTop: 3,
-                marginBottom: 3,
-                backgroundColor: darkBlue,
-                color: 'white,',
-                borderColor: 'white',
-              }}
-            >
-              CREATE PROFILE
-            </LoadingButton>
-          </Box>
-          <Box
-            component="div"
-            style={{ display: 'flex', flexDirection: 'column' }}
-          >
-            <TextField
-              label="gender"
-              variant="outlined"
-              value={`${!profile.gender ? '' : profile.gender}`}
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setGender(e.target.value));
-              }}
-            />
-
-            <TextField
-              label="language"
-              variant="outlined"
-              value={`${!profile.language ? '' : profile.language}`}
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setLanguage(e.target.value));
-              }}
-            />
-
-            <TextField
-              label="passport"
-              variant="outlined"
-              value={`${!profile.passportNumber ? '' : profile.passportNumber}`}
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setPassport(e.target.value));
-              }}
-            />
-
-            <TextField
-              label="address"
-              variant="outlined"
-              value={`${!profile.address ? '' : profile.address}`}
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setAddress(e.target.value));
-              }}
-            />
-          </Box>
-
-          <Box
-            component="div"
-            style={{ display: 'flex', flexDirection: 'column' }}
-          >
-            <TextField
-              label="residence"
-              variant="outlined"
-              value={`${!profile.residence ? '' : profile.residence}`}
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setResidence(e.target.value));
-              }}
-            />
-
-            <TextField
-              label="department"
-              variant="outlined"
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setDepartment(e.target.value));
-              }}
-            />
-
-            <TextField
-              label="currency"
-              variant="outlined"
-              value={`${!profile.currency ? '' : profile.currency}`}
-              sx={{
-                fontWeight: 600,
-                margin: 2,
-                textAlign: 'left',
-              }}
-              onChange={(e) => {
-                dispatch(setCurrency(e.target.value));
-              }}
-            />
-
-            <LocalizationProvider
-              style={{ color: 'blue' }}
-              dateAdapter={AdapterDateFns}
-            >
-              <DesktopDatePicker
-                disableMaskedInput
-                value={profile.birthdate}
-                onChange={(date) => {
-                  dispatch(
-                    setBirthdate(new Date(date).toISOString().split('T')[0])
-                  );
-                }}
-                label="Birthdate"
-                maxDate={new Date()}
-                renderInput={(params) => (
-                  <TextField
-                    style={{
-                      fontWeight: 600,
-                      marginTop: 15,
-                      marginLeft: 1.2,
-                      marginRight: 1.2,
-                      marginBottom: 1.2,
-                      textAlign: 'left',
-                      color: blueColor,
-                    }}
-                    {...params}
-                    onKeyDown={(e) => {
-                      e.preventDefault();
-                    }}
-                  />
-                )}
+                alt="Profile picture"
+                src="https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png"
               />
-            </LocalizationProvider>
 
-            <LoadingButton
-              className="buttonTwo"
-              loading={loading}
-              onClick={async () => {
-                const res = await createProfile();
-              }}
-              variant="contained"
-              sx={{
-                alignSelf: 'center',
-                width: 180,
-                marginTop: 3,
-                marginBottom: 3,
-                backgroundColor: darkBlue,
-                color: 'white',
-                borderColor: 'white',
-                display: 'none',
-              }}
+              <label htmlFor="contained-button-file">
+                <Input
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                />
+                <Button
+                  component="label"
+                  style={{
+                    marginTop: '20px',
+                  }}
+                  startIcon={<FileUploadIcon />}
+                  variant="contained"
+                >
+                  {t('Upload Image')}
+                  <input type="file" hidden onChange={handleImage} />
+                </Button>
+              </label>
+
+              <LoadingButton
+                className="buttonOne"
+                loading={loading}
+                onClick={async () => {
+                  const res = await createProfile();
+                }}
+                variant="contained"
+                sx={{
+                  width: 180,
+                  marginTop: 3,
+                  marginBottom: 3,
+                  backgroundColor: darkBlue,
+                  color: 'white,',
+                  borderColor: 'white',
+                }}
+              >
+                {t('CREATE PROFILE')}
+              </LoadingButton>
+            </Box>
+            <Box
+              component="div"
+              style={{ display: 'flex', flexDirection: 'column' }}
             >
-              CREATE PROFILE
-            </LoadingButton>
-          </Box>
-        </div>
+              <TextField
+                label={t('gender')}
+                variant="outlined"
+                value={`${!profile.gender ? '' : profile.gender}`}
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setGender(e.target.value));
+                }}
+              />
 
-         </div>
-        
+              <TextField
+                label={t('language')}
+                variant="outlined"
+                value={`${!profile.language ? '' : profile.language}`}
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setLanguage(e.target.value));
+                }}
+              />
+
+              <TextField
+                label={t('passport')}
+                variant="outlined"
+                value={`${
+                  !profile.passportNumber ? '' : profile.passportNumber
+                }`}
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setPassport(e.target.value));
+                }}
+              />
+
+              <TextField
+                label={t('address')}
+                variant="outlined"
+                value={`${!profile.address ? '' : profile.address}`}
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setAddress(e.target.value));
+                }}
+              />
+            </Box>
+
+            <Box
+              component="div"
+              style={{ display: 'flex', flexDirection: 'column' }}
+            >
+              <TextField
+                label={t('residence')}
+                variant="outlined"
+                value={`${!profile.residence ? '' : profile.residence}`}
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setResidence(e.target.value));
+                }}
+              />
+
+              <TextField
+                label={t('department')}
+                variant="outlined"
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setDepartment(e.target.value));
+                }}
+              />
+
+              <TextField
+                label={t('currency')}
+                variant="outlined"
+                value={`${!profile.currency ? '' : profile.currency}`}
+                sx={{
+                  fontWeight: 600,
+                  margin: 2,
+                  textAlign: 'left',
+                }}
+                onChange={(e) => {
+                  dispatch(setCurrency(e.target.value));
+                }}
+              />
+
+              <LocalizationProvider
+                style={{ color: 'blue' }}
+                dateAdapter={AdapterDateFns}
+              >
+                <DesktopDatePicker
+                  disableMaskedInput
+                  value={profile.birthdate}
+                  onChange={(date) => {
+                    dispatch(
+                      setBirthdate(new Date(date).toISOString().split('T')[0])
+                    );
+                  }}
+                  label={t('Birthdate')}
+                  maxDate={new Date()}
+                  renderInput={(params) => (
+                    <TextField
+                      style={{
+                        fontWeight: 600,
+                        marginTop: 15,
+                        marginLeft: 1.2,
+                        marginRight: 1.2,
+                        marginBottom: 1.2,
+                        textAlign: 'left',
+                        color: blueColor,
+                      }}
+                      {...params}
+                      onKeyDown={(e) => {
+                        e.preventDefault();
+                      }}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+
+              <LoadingButton
+                className="buttonTwo"
+                loading={loading}
+                onClick={async () => {
+                  const res = await createProfile();
+                }}
+                variant="contained"
+                sx={{
+                  alignSelf: 'center',
+                  width: 180,
+                  marginTop: 3,
+                  marginBottom: 3,
+                  backgroundColor: darkBlue,
+                  color: 'white',
+                  borderColor: 'white',
+                  display: 'none',
+                }}
+              >
+                {t('CREATE PROFILE')}
+              </LoadingButton>
+            </Box>
+          </div>
+        </div>
       </Modal>
     </Box>
   );

@@ -12,7 +12,6 @@ import Login from '../views/home/Login';
 import Signup from '../components/signup/Signup';
 import SignupSuccess from '../components/signup/SignupSuccess';
 import SocialAuthGoogleDir from '../views/home/SocialAuthGoogleDir';
-import Accommodation from '../components/accommodation/Accommodation';
 import AccommodationList from '../components/accommodation/AccommodationList';
 import AccommodationReview from '../components/accommodation/AccommodationReview';
 import SuccessLogin from '../views/home/SuccessLogin';

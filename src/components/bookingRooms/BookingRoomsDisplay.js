@@ -24,10 +24,11 @@ import setAccommodations from '../../redux/actions/accommodationsActions';
 import { fetchRoomsBooking } from '../../redux/actions/bookingroomActions';
 import FormDialog from './DialogBox';
 import { bookingSetAccommodationId } from '../../redux/actions/bookingSetAccommodationIdAction';
+import { useTranslation } from 'react-i18next';
 
 const BookingRoomDisplay = (props) => {
   const { accommodationId, tripid } = useParams();
-
+  const { t } = useTranslation();
   const [acc, setAcc] = useState(null);
 
   //refleshment
@@ -139,7 +140,7 @@ const BookingRoomDisplay = (props) => {
                         color="Black"
                         sx={{ fontWeight: 600 }}
                       >
-                        Room Number: {room.roomNumber}
+                        {t('Room Number')}: {room.roomNumber}
                       </Typography>
                       <Card sx={{ maxWidth: 350 }}>
                         <CardActionArea>
@@ -150,7 +151,7 @@ const BookingRoomDisplay = (props) => {
                               component="div"
                               sx={{ fontWeight: 600 }}
                             >
-                              Room Type:{room.roomType}
+                              {t('Room Type')}:{room.roomType}
                               <Typography
                                 variant
                                 style={{ textTransform: 'none' }}
@@ -173,7 +174,7 @@ const BookingRoomDisplay = (props) => {
                               color="#00000"
                               sx={{ fontWeight: 900 }}
                             >
-                              Price : {room.price} {room.currency}
+                              {t('Price')} : {room.price} {room.currency}
                               <FormDialog
                                 availability={room.isAvailable}
                                 roomData={room}

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import '../tripRequests/requestsTable.scss';
 import { closeViewTrip } from '../../redux/actions/tripViewAction';
+import { useTranslation } from 'react-i18next';
 
 const classes = {
   modal: {
@@ -71,6 +72,7 @@ const classes = {
 };
 
 export default function ViewTripRequestSkeleton() {
+  const { t } = useTranslation();
   const entireState = useSelector((state) => state);
   const singleTripState = entireState.singleTrip;
   const { tripRequest, loading } = singleTripState;
@@ -100,7 +102,7 @@ export default function ViewTripRequestSkeleton() {
           component="h2"
           sx={{ width: 'fit-content' }}
         >
-          Trip Request Details
+          {t('Trip Request Details')}
         </Typography>
       </Box>
 
@@ -122,9 +124,9 @@ export default function ViewTripRequestSkeleton() {
           <Box flex={1} display="flex" alignItems="center">
             <Stack direction="row" spacing={2}>
               <Box sx={{ color: '#07539F' }}>
-                <Typography>Names:</Typography>
-                <Typography>Address:</Typography>
-                <Typography>Passport:</Typography>
+                <Typography>{t('Names')}:</Typography>
+                <Typography>{t('Address')}:</Typography>
+                <Typography>{t('Passport')}:</Typography>
               </Box>
               <Box sx={{ color: 'white' }}>
                 <Typography>
@@ -154,7 +156,7 @@ export default function ViewTripRequestSkeleton() {
                 '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
             }}
           >
-            Trip Owner
+            {t('Trip Owner')}
           </Box>
         </Box>
         <Stack
@@ -163,12 +165,16 @@ export default function ViewTripRequestSkeleton() {
           // sx={{ backgroundColor: 'lightblue' }}
         >
           <Box sx={{ color: 'gray', width: '35%' }}>
-            <Typography sx={classes.leftTitle}>Departure Location:</Typography>
-            <Typography sx={classes.leftTitle}>Destination(s):</Typography>
-            <Typography sx={classes.leftTitle}>Trip Reason:</Typography>
-            <Typography sx={classes.leftTitle}>Status:</Typography>
-            <Typography sx={classes.leftTitle}>Depart Date:</Typography>
-            <Typography sx={classes.leftTitle}>Return Date:</Typography>
+            <Typography sx={classes.leftTitle}>
+              {t('Departure Location')}:
+            </Typography>
+            <Typography sx={classes.leftTitle}>
+              {t('Destination(s)')}:
+            </Typography>
+            <Typography sx={classes.leftTitle}>{t('Trip Reason')}:</Typography>
+            <Typography sx={classes.leftTitle}>{t('Status')}:</Typography>
+            <Typography sx={classes.leftTitle}>{t('Depart Date')}:</Typography>
+            <Typography sx={classes.leftTitle}>{t('Return Date')}:</Typography>
           </Box>
           <Box
             className="modal"

@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { ButtonGroup, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import CloseIcon from '@mui/icons-material/Close';
@@ -76,6 +77,7 @@ const classes = {
 };
 
 export default function BasicModal(props) {
+  const { t } = useTranslation();
   const { show, close, tripRequest } = props;
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
   const [confirmModalData, setConfirmModalData] = React.useState('');
@@ -87,9 +89,9 @@ export default function BasicModal(props) {
 
   const { tripRequests } = tripRequestsState;
   const { currentUser } = currentUserState;
-  const { locations } = locationsState;/////////
+  const { locations } = locationsState; /////////
   const currentTripRequest = tripRequests.filter(
-    (request) => request.id === tripRequest,
+    (request) => request.id === tripRequest
   );
 
   if (currentTripRequest.length === 1) {
@@ -108,7 +110,7 @@ export default function BasicModal(props) {
     } = currentTripRequest[0];
 
     const departLocationName = locations.filter(
-      (location) => location.id === departLocation,
+      (location) => location.id === departLocation
     )[0].locationName;
 
     let destinationNames;
@@ -116,7 +118,7 @@ export default function BasicModal(props) {
     if (destinations.length === 1) {
       const parsedDestinations = JSON.parse(destinations);
       destinationNames = locations.filter(
-        (location) => location.id === parsedDestinations.destinationId,
+        (location) => location.id === parsedDestinations.destinationId
       )[0].locationName;
     }
     if (destinations.length > 1) {
@@ -156,7 +158,7 @@ export default function BasicModal(props) {
                 component="h2"
                 sx={{ width: 'fit-content' }}
               >
-                Trip Request Details
+                {t('Trip Request Details')}
               </Typography>
             </Box>
 
@@ -177,17 +179,17 @@ export default function BasicModal(props) {
                     style={classes.userInfo.userImg}
                     alt="user"
                     src={
-                      User?.Profile?.picture
-                      ?? 'https://res.cloudinary.com/dpd4zujfh/image/upload/v1653137040/barefoot_api/profiles/avatar_fjiug5.jpg'
+                      User?.Profile?.picture ??
+                      'https://res.cloudinary.com/dpd4zujfh/image/upload/v1653137040/barefoot_api/profiles/avatar_fjiug5.jpg'
                     }
                   />
                 </Box>
                 <Box flex={1} display="flex" alignItems="center">
                   <Stack direction="row" spacing={2}>
                     <Box sx={{ color: '#07539F' }}>
-                      <Typography>Names:</Typography>
-                      <Typography>Address:</Typography>
-                      <Typography>Passport:</Typography>
+                      <Typography>{t('Names')}:</Typography>
+                      <Typography>{t('Address')}:</Typography>
+                      <Typography>{t('Passport')}:</Typography>
                     </Box>
                     <Box sx={{ color: 'white' }}>
                       <Typography>{names}</Typography>
@@ -211,7 +213,7 @@ export default function BasicModal(props) {
                       '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
                   }}
                 >
-                  Trip Owner
+                  {t('Trip Owner')}
                 </Box>
               </Box>
               <Stack
@@ -221,15 +223,21 @@ export default function BasicModal(props) {
               >
                 <Box sx={{ color: 'gray', width: '35%' }}>
                   <Typography sx={classes.leftTitle}>
-                    Departure Location:
+                    {t('Departure Location')}:
                   </Typography>
                   <Typography sx={classes.leftTitle}>
-                    Destination(s):
+                    {t('Destination(s)')}:
                   </Typography>
-                  <Typography sx={classes.leftTitle}>Trip Reason:</Typography>
-                  <Typography sx={classes.leftTitle}>Status:</Typography>
-                  <Typography sx={classes.leftTitle}>Depart Date:</Typography>
-                  <Typography sx={classes.leftTitle}>Return Date:</Typography>
+                  <Typography sx={classes.leftTitle}>
+                    {t('Trip Reason')}:
+                  </Typography>
+                  <Typography sx={classes.leftTitle}>{t('Status')}:</Typography>
+                  <Typography sx={classes.leftTitle}>
+                    {t('Depart Date')}:
+                  </Typography>
+                  <Typography sx={classes.leftTitle}>
+                    {t('Return Date')}:
+                  </Typography>
                 </Box>
                 <Box
                   className="modal"
@@ -249,15 +257,15 @@ export default function BasicModal(props) {
                     {!Array.isArray(destinationNames)
                       ? destinationNames
                       : destinationNames.map((destination, i, arr) => (
-                        <React.Fragment key={i}>
-                          {destination}
-                          {i + 1 === arr.length ? (
-                            ' .'
-                          ) : (
-                            <DoubleArrowIcon sx={classes.arrowIcon} />
-                          )}
-                        </React.Fragment>
-                      ))}
+                          <React.Fragment key={i}>
+                            {destination}
+                            {i + 1 === arr.length ? (
+                              ' .'
+                            ) : (
+                              <DoubleArrowIcon sx={classes.arrowIcon} />
+                            )}
+                          </React.Fragment>
+                        ))}
                   </Typography>
                   <Typography sx={classes.RightValues}>{tripReason}</Typography>
                   <Typography
@@ -296,15 +304,16 @@ export default function BasicModal(props) {
                       color="success"
                       onClick={() => {
                         setConfirmModalData({
-                          message:
-                            'Are you sure you want to APPROVE this trip request?',
+                          message: t(
+                            'Are you sure you want to APPROVE this trip request?'
+                          ),
                           action: 'approve',
                           id,
                         });
                         setShowConfirmModal(true);
                       }}
                     >
-                      Approve
+                      {t('Approve')}
                     </Button>
                     <Button
                       variant="contained"
@@ -312,24 +321,25 @@ export default function BasicModal(props) {
                       color="secondary"
                       onClick={() => {
                         setConfirmModalData({
-                          message:
-                            'Are you sure you want to REJECT this trip request?',
+                          message: t(
+                            'Are you sure you want to REJECT this trip request?'
+                          ),
                           action: 'reject',
                           id,
                         });
                         setShowConfirmModal(true);
                       }}
                     >
-                      Reject
+                      {t('Reject')}
                     </Button>
                   </>
                 ) : currentUser.roleId === 5 ? (
                   <Button variant="contained" size="medium" color="primary">
-                    Edit
+                    {t('Edit')}
                   </Button>
                 ) : (
                   <Typography color="blue">
-                    You are only allowed to view
+                    {t('You are only allowed to view')}
                   </Typography>
                 )
               ) : currentUser.roleId === 3 ? (
@@ -340,7 +350,7 @@ export default function BasicModal(props) {
                     color="success"
                     disabled
                   >
-                    Approve
+                    {t('Approve')}
                   </Button>
                   <Button
                     variant="contained"
@@ -348,7 +358,7 @@ export default function BasicModal(props) {
                     color="secondary"
                     disabled
                   >
-                    Reject
+                    {t('Reject')}
                   </Button>
                 </>
               ) : currentUser.roleId === 5 ? (
@@ -358,11 +368,11 @@ export default function BasicModal(props) {
                   color="primary"
                   disabled
                 >
-                  Edit
+                  {t('Edit')}
                 </Button>
               ) : (
                 <Typography color="blue">
-                  You are only allowed to view
+                  {t('You are only allowed to view')}
                 </Typography>
               )}
             </ButtonGroup>
