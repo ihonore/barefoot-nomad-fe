@@ -379,9 +379,9 @@ function profile() {
               } else if (profile.role == 2) {
                 return 'TRAVEL ADMIN';
               } else if (profile.role == 3) {
-                return 'ACCOMODATION SUPPLIER';
-              } else if (profile.role == 4) {
                 return 'MANAGER';
+              } else if (profile.role == 4) {
+                return 'ACCOMODATION SUPPLIER';
               } else {
                 return 'REQUESTER';
               }
