@@ -195,6 +195,15 @@ export const resources = {
         'You do not have a profile, create one to proceed!',
       'CREATE PROFILE': 'CREATE PROFILE',
       residence: 'residence',
+      'ACCOMMODATION REVIEWS': 'ACCOMMODATION REVIEWS',
+      'Forgot your password ?': 'Forgot your password ?',
+      'Send reset link': 'Send reset link',
+      'You have reset Password successfully!':
+        'You have reset Password successfully!',
+      'Reset your Password': 'Reset your Password',
+      'Confirm Password': 'Confirm Password',
+      'Reset Password': 'Reset Password',
+      'Enter your email': 'Enter your email',
     },
   },
   fr: {
@@ -390,6 +399,15 @@ export const resources = {
         "Vous n'avez pas de profil, créez-en un pour continuer !",
       'CREATE PROFILE': 'CRÉER UN PROFIL',
       residence: 'résidence',
+      'ACCOMMODATION REVIEWS': "AVIS SUR L'HÉBERGEMENT",
+      'Forgot your password ?': 'Mot de passe oublié ?',
+      'Send reset link': 'Envoyer le lien de réinitialisation',
+      'You have reset Password successfully!':
+        'Vous avez réinitialisé le mot de passe avec succès!',
+      'Reset your Password': 'Réinitialisez votre mot de passe',
+      'Confirm Password': 'Confirmez le mot de passe',
+      'Reset Password': 'réinitialiser le mot de passe',
+      'Enter your email': 'Entrer votre Email',
     },
   },
   kin: {
@@ -583,6 +601,15 @@ export const resources = {
         'Ntabwo ufite umwirondoro, yuzuze kugirango ukomeze!',
       'CREATE PROFILE': 'BIKA UMWIRONDORO',
       residence: 'aho utuye',
+      'ACCOMMODATION REVIEWS': "ISUZUMA RY'AMACUMBI",
+      'Forgot your password ?': 'Wibagiwe ijambo ryibanga?',
+      'Send reset link': 'Ohereza link yoguhidura ijambobanga',
+      'You have reset Password successfully!':
+        'Guhindura ijambobanga byagenze neza!',
+      'Reset your Password': 'Hindura ijambobanga',
+      'Confirm Password': 'Emeza ijambobanga',
+      'Reset Password': 'Hindura ijambobanga',
+      'Enter your email': 'Shyiramo imeri yawe',
     },
   },
 };

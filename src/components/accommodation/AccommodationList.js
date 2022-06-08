@@ -179,7 +179,7 @@ function AccommodationList(props) {
                   sx={{ m: 4, color: '#07539F' }}
                   variant="outlined"
                 >
-                  CREATE AN ACCOMMODATION
+                  {t('CREATE AN ACCOMMODATION')}
                 </Button>
               </Grid>
             )}
@@ -189,7 +189,7 @@ function AccommodationList(props) {
                 sx={{ m: 4, color: '#07539F' }}
                 variant="outlined"
               >
-                ACCOMMODATION REVIEWS
+                {t('ACCOMMODATION REVIEWS')}
               </Button>
             </Grid>
           </Grid>
