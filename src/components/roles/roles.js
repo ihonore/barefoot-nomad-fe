@@ -28,6 +28,7 @@ const Roles = (props) => {
   const [oldRole, setOldRole] = React.useState('');
   const [newRole, setNewRole] = React.useState('');
 
+  const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
   const handleCloseModel = () => {
     setOpen(false);
   };
@@ -144,7 +145,7 @@ const Roles = (props) => {
   const getRoleId = (roleName) => {
     const getRolesArr = props.users.roles;
     let role = [];
-    for (let i = 0; i < getRolesArr.length; i++) {
+    for (let i = 0; i < getRolesArr?.length; i++) {
       role = getRolesArr[i];
       if (role.name == roleName) {
         return role.id;
@@ -175,7 +176,7 @@ const Roles = (props) => {
           severity: 'error',
         });
       } else {
-        const response = await props.updateRoles(role, email);
+        const response = await props.updateRoles(role, email, token);
         await setSnackbar({
           children: `Role successfully updated from ${oldRole} to ${newRole} `,
           severity: 'success',
@@ -192,19 +193,18 @@ const Roles = (props) => {
     }
   };
 
-  // call the row function
-
   const row = rows();
   useEffect(() => {
+    setIsLoading(true);
     const func = async () => {
-      setIsLoading(true);
-      await props.usersAction();
+      
+      await props.usersAction(token);
       setIsLoading(false);
     };
     func();
 
     const rolesFunction = async () => {
-      await props.userRoles();
+      await props.userRoles(token);
     };
     rolesFunction();
   }, []);
