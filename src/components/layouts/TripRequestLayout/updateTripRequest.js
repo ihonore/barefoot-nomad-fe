@@ -18,7 +18,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { initialize } from '../../../redux/actions/tripRequestActions';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Modal from '@mui/material/Modal';
-import { loadTripRequests } from '../../../redux/actions/tripRequestsActions'
+import { loadTripRequests } from '../../../redux/actions/tripRequestsActions';
+import { useTranslation } from 'react-i18next';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -46,6 +47,7 @@ const closeIcon = {
 };
 
 const UpdateTripRequest = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const tripRequest = useSelector((state) => state.tripRequest);
   const allLocations = useSelector((state) => state.allLocations);
@@ -73,7 +75,7 @@ const UpdateTripRequest = (props) => {
         },
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         dispatch(
           updateTripRequest({
             stepOne: {
@@ -134,7 +136,7 @@ const UpdateTripRequest = (props) => {
         updatedTripInfo,
         {
           headers: {
-            Authorization:`Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
@@ -147,7 +149,7 @@ const UpdateTripRequest = (props) => {
           setActiveStep(0);
           setIsLoading(false);
           setTimeout(() => {
-            props.close()
+            props.close();
           }, 7000);
           dispatch(loadTripRequests());
         }
@@ -190,14 +192,14 @@ const UpdateTripRequest = (props) => {
             <Typography
               variant="body1"
               gutterBottom
-              align =  'center'
+              align="center"
               sx={{
                 margin: 3,
                 fontWeight: 600,
                 width: '100%',
               }}
             >
-              TRIP REQUEST FINAL REVIEW
+              {t('TRIP REQUEST FINAL REVIEW')}
             </Typography>
 
             <Typography
@@ -205,9 +207,10 @@ const UpdateTripRequest = (props) => {
               gutterBottom
               sx={{ margin: 3, textAlign: 'left' }}
             >
-              <strong>N.B:</strong> Below is a read only overview of your trip
-              request before submission, to change some of the trip details,
-              click the previous button
+              <strong>N.B:</strong>{' '}
+              {t(
+                'Below is a read only overview of your tip request before submission, to change some of the trip details, click the previous button'
+              )}
             </Typography>
             <StepOne />
             <StepTwo />
@@ -233,7 +236,7 @@ const UpdateTripRequest = (props) => {
                   borderColor: 'white',
                 }}
               >
-                EDIT
+                {t('EDIT')}
               </LoadingButton>
             </div>
           </>
@@ -251,30 +254,32 @@ const UpdateTripRequest = (props) => {
   return (
     <Modal
       open={props.open}
-      onClose={()=>props.close()}
+      onClose={() => props.close()}
       sx={{
         overflow: 'scroll',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding:'20px',
+        padding: '20px',
         width: '100vw',
-        height:'100vh',
+        height: '100vh',
       }}
     >
-      <Box sx={{ 
-        overflow: 'scroll',
-        position: 'relative',
-        background: 'white',
-        width: '70vw',
-        minWidth:'60vw',
-        height:'80vh',
-        borderRadius: 3,
-        marginLeft: '200px',
-        marginRight: '200px',
-        padding:'40px',
-        }}>
-        <CloseIcon sx={closeIcon} onClick={()=> props.close()} />
+      <Box
+        sx={{
+          overflow: 'scroll',
+          position: 'relative',
+          background: 'white',
+          width: '70vw',
+          minWidth: '60vw',
+          height: '80vh',
+          borderRadius: 3,
+          marginLeft: '200px',
+          marginRight: '200px',
+          padding: '40px',
+        }}
+      >
+        <CloseIcon sx={closeIcon} onClick={() => props.close()} />
         <form noValidate autoComplete="off">
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -293,22 +298,22 @@ const UpdateTripRequest = (props) => {
             </Alert>
           </Snackbar>
           <Typography
-            align ='center'
+            align="center"
             variant="body1"
             gutterBottom
             sx={{ margin: 3, fontSize: 22, fontWeight: 800 }}
           >
-            TRIP REQUEST FORM
+            {t('TRIP REQUEST FORM')}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.root}>
             <Step>
-              <StepLabel>First</StepLabel>
+              <StepLabel>{t('First')}</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Second</StepLabel>
+              <StepLabel>{t('Second')}</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Third</StepLabel>
+              <StepLabel>{t('Third')}</StepLabel>
             </Step>
           </Stepper>
 
@@ -330,7 +335,7 @@ const UpdateTripRequest = (props) => {
                 }}
                 style={{ display: activeStep < 1 ? 'none' : 'block' }}
               >
-                Previous
+                {t('Previous')}
               </Button>
             </div>
             <div
@@ -350,7 +355,7 @@ const UpdateTripRequest = (props) => {
                 }}
                 style={{ display: activeStep == 2 ? 'none' : 'flex' }}
               >
-                Next
+                {t('Next')}
               </Button>
             </div>
           </div>

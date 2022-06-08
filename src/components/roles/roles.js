@@ -18,8 +18,10 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useTranslation } from 'react-i18next';
 
 const Roles = (props) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -93,7 +95,7 @@ const Roles = (props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              style={{ width: '100%', border: 'none', height: '100%'}}
+              style={{ width: '100%', border: 'none', height: '100%' }}
             />
           )}
         />
@@ -271,13 +273,13 @@ const Roles = (props) => {
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            are you sure you want to update role?
+            {t('are you sure you want to update role?')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleNo}>No</Button>
+          <Button onClick={handleNo}>{t('No')}</Button>
           <Button onClick={handleYes} autoFocus>
-            Confirm
+            {t('Confirm')}
           </Button>
         </DialogActions>
       </Dialog>

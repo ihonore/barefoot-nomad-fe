@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,6 +14,7 @@ import {
 import { showLoader } from '../../redux/actions/loaderActions';
 
 const ConfirmModal = (props) => {
+  const { t } = useTranslation();
   const entireState = useSelector((state) => state);
   const dispatch = useDispatch();
   const currentUserState = entireState.currentUser;
@@ -52,9 +54,9 @@ const ConfirmModal = (props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={close}>No</Button>
+        <Button onClick={close}>{t('No')}</Button>
         <Button onClick={handleAction} autoFocus>
-          Yes
+          {t('Yes')}
         </Button>
       </DialogActions>
     </Dialog>

@@ -6,11 +6,12 @@ import {
   CircularProgress,
   Snackbar,
   Alert,
-  Grid
+  Grid,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchAccommodations } from '../../redux/actions/accommodationListActions';
@@ -55,7 +56,7 @@ const columns = [
       const [open, setOpen] = useState(false);
       const [openD, setOpenD] = useState(false);
       const [openU, setOpenU] = useState(false);
-
+      const { t } = useTranslation();
       return (
         <div>
           <AccommodationDeleteModal
@@ -81,7 +82,7 @@ const columns = [
             sx={{ ml: 1, color: '#07539F', borderColor: '#07539F' }}
             variant="outlined"
           >
-            VIEW
+            {t('VIEW')}
           </Button>
           {roleId == 2 && (
             <>
@@ -90,14 +91,14 @@ const columns = [
                 sx={{ ml: 1, background: '#07539F' }}
                 variant="contained"
               >
-                EDIT
+                {t('EDIT')}
               </Button>
               <Button
                 onClick={() => setOpenD(true)}
                 sx={{ ml: 1, color: 'red', borderColor: 'red' }}
                 variant="outlined"
               >
-                DELETE
+                {t('DELETE')}
               </Button>
             </>
           )}
@@ -109,9 +110,9 @@ const columns = [
 ];
 
 function AccommodationList(props) {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
+  const { t } = useTranslation();
   const [state, setState] = useState({
     open: true,
     vertical: 'top',
@@ -141,12 +142,12 @@ function AccommodationList(props) {
     fetchA();
   }, []);
 
-  useEffect(() => { });
+  useEffect(() => {});
 
   const action = (
     <React.Fragment>
       <Button style={{ color: '#fff' }} size="small" onClick={handleClose}>
-        UNDO
+        {t('UNDO')}
       </Button>
     </React.Fragment>
   );
@@ -169,28 +170,30 @@ function AccommodationList(props) {
             handleClose={() => setOpenC(false)}
             isOpen={openC}
           />
-          
-            <Grid container spacing={1}>
+
+          <Grid container spacing={1}>
             {roleId == 2 && (
-              <Grid item><Button
-                onClick={handleOpenCreate}
+              <Grid item>
+                <Button
+                  onClick={handleOpenCreate}
+                  sx={{ m: 4, color: '#07539F' }}
+                  variant="outlined"
+                >
+                  {t('CREATE AN ACCOMMODATION')}
+                </Button>
+              </Grid>
+            )}
+            <Grid item>
+              <Button
+                onClick={() => navigate('/accommodations/review')}
                 sx={{ m: 4, color: '#07539F' }}
                 variant="outlined"
               >
-                CREATE AN ACCOMMODATION
-              </Button></Grid>
-              )}
-              <Grid item><Button
-              onClick={()=>navigate('/accommodations/review')}
-                sx={{ m: 4, color: '#07539F' }}
-                variant="outlined"
-              >
-                ACCOMMODATION REVIEWS
-              </Button></Grid>
+                {t('ACCOMMODATION REVIEWS')}
+              </Button>
             </Grid>
+          </Grid>
 
-
-          
           <Typography
             variant="body1"
             sx={{
@@ -200,7 +203,7 @@ function AccommodationList(props) {
               fontSize: '20px',
             }}
           >
-            View accommodations
+            {t('View accommodations')}
           </Typography>
           <br />
           <br />

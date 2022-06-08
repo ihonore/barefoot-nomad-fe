@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import InputAdornment from '@mui/material/InputAdornment';
 import Box from '@mui/material/Box';
 import EmailIcon from '@mui/icons-material/Email';
+import { useTranslation } from 'react-i18next';
 import Link from '@mui/material/Link';
 import { login } from '../../redux/actions/loginActions';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -28,6 +29,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 const LoginComponent = (props) => {
   const token = JSON.parse(localStorage.getItem('userToken'));
+  const { t } = useTranslation();
   let navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -98,7 +100,7 @@ const LoginComponent = (props) => {
           <Container className={classes.formContainer}>
             <Paper className="paper-login">
               <Typography component="h1" variant="h5" className={classes.title}>
-                Sign In to Your Account
+                {t('Sign In to Your Account')}
               </Typography>
               <div className={classes.social}>
                 <GoogleIcon
@@ -112,7 +114,7 @@ const LoginComponent = (props) => {
               </div>
               <br />
               <Typography className={classes.social}>
-                Or use your email account
+                {t('Or use your email account')}
               </Typography>
               <ValidatorForm form onSubmit={handleLogin}>
                 <FormControl margin="normal" required fullWidth>
@@ -139,7 +141,7 @@ const LoginComponent = (props) => {
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
                   <TextValidator
-                    label="Password"
+                    label={t('Password')}
                     name="password"
                     type="password"
                     variant="filled"
@@ -162,7 +164,7 @@ const LoginComponent = (props) => {
                   underline="none"
                   style={{ color: '#07539F', marginBottom: '20px' }}
                 >
-                  {'Forgot Password?'}
+                  {t('Forgot Password?')}
                 </Link>
                 <br />
                 <LoadingButton
@@ -180,7 +182,7 @@ const LoginComponent = (props) => {
                     backgroundColor: '#07539F',
                   }}
                 >
-                  Sign In
+                  {t('Sign In')}
                 </LoadingButton>
               </ValidatorForm>
             </Paper>
@@ -218,11 +220,13 @@ const LoginComponent = (props) => {
               gutterBottom
               className={classes.rightBanner}
             >
-              Hello Friend!
+              {t('Hello Friend!')}
             </Typography>
             <div className={classes.rightBannerParagraph}>
               <Typography paragraph>
-                Enter your personal details and start your journey with us
+                {t(
+                  'Enter your personal details and start your journey with us'
+                )}
               </Typography>
             </div>
 
@@ -240,7 +244,7 @@ const LoginComponent = (props) => {
                 outlineColor: '#ffffff',
               }}
             >
-              Sign Up
+              {t('Sign Up')}
             </Button>
           </div>
         </Box>

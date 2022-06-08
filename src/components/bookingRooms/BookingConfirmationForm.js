@@ -1,52 +1,30 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import MomentUtils from '@date-io/moment';
+import React, { useEffect } from 'react';
+
 import {
   Table,
-  TableBody,
   TableCell,
   TableContainer,
   TableHead,
   Button,
   TableRow,
   Paper,
-  Stack,
   Typography,
   TextField,
-  FormControl,
-  FormHelperText,
-  MenuItem,
-  InputLabel,
-  Select,
-  gutterBottom,
 } from '@mui/material';
-import dayjs from 'dayjs';
-import Box from '@mui/material/Box';
 import { Container } from 'react-grid-system';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import moment from 'moment';
-import { DesktopDateRangePicker } from '@mui/x-date-pickers-pro/DesktopDateRangePicker';
-import { MobileDateRangePicker } from '@mui/x-date-pickers-pro/MobileDateRangePicker';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { DateRange } from '@mui/icons-material';
-import DialogActions from '@mui/material/DialogActions';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import Grid from '@material-ui/core/Grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
-import { ValidatorComponent } from 'react-material-ui-form-validator';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useLocation } from 'react-router-dom';
-import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import { fetchRoomsBooking } from '../../redux/actions/bookingroomActions';
 import { createBookingRoom } from '../../redux/actions/bookingConfirmationActions';
-import createBookingConfirmationRequest from '../../redux/actions/bookingConfirmationActions';
 import setCurrentUser, {
   setCurrentUserProfile,
 } from '../../redux/actions/currentUserActions';
+import { useTranslation } from 'react-i18next';
 
 function BookingConfirmationForm(props) {
   const dispatch = useDispatch();
@@ -68,6 +46,7 @@ function BookingConfirmationForm(props) {
     (state) => state.bookingSetAccommodationIdReducer
   );
   const { pathname } = useLocation();
+  const { t } = useTranslation();
 
   const getCurrentUserProfile = async (id, token) => {
     console.log('%cTokenInGetProfile====', 'background-color:green', token);
@@ -124,11 +103,6 @@ function BookingConfirmationForm(props) {
   };
 
   const handleSubmit = async (event) => {
-    console.log(roomId);
-    console.log(tripId);
-    console.log(dateCheckIn);
-    console.log(dateCheckOut);
-
     await event.preventDefault();
     await dispatch(
       createBookingRoom(roomId, tripId, dateCheckIn, dateCheckOut)
@@ -146,32 +120,32 @@ function BookingConfirmationForm(props) {
         <Container>
           <TableContainer component={Paper}>
             <Typography color="primary">
-              <h2>Booking Confirmation Form</h2>
+              <h2>{'Booking Confirmation Form'}</h2>
             </Typography>
             <Table size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Booked Room Number : </TableCell>
+                  <TableCell>{t('Booked Room Number')} : </TableCell>
                   <TableCell onChange={handleChange} align="left" id="roomId">
                     {room.roomNumber}
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
-                  <TableCell>Names : </TableCell>
+                  <TableCell>{t('Names')} : </TableCell>
                   <TableCell align="left">{names}</TableCell>
                 </TableRow>
 
                 <TableRow>
-                  <TableCell id="priceId">Price </TableCell>
+                  <TableCell id="priceId">{t('Price')} </TableCell>
                   <TableCell align="left">{room.price}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell id="currencyId">Currency </TableCell>
+                  <TableCell id="currencyId">{t('Currency')} </TableCell>
                   <TableCell align="left">{room.currency}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell id="roomTypeId">Room Type </TableCell>
+                  <TableCell id="roomTypeId">{t('Room Type')} </TableCell>
                   <TableCell align="left">{room.roomType}</TableCell>
                 </TableRow>
                 <TableRow>
@@ -223,7 +197,7 @@ function BookingConfirmationForm(props) {
         type="submit"
         style={{ marginRight: 20 }}
       >
-        Confirm
+        {t('Confirm')}
       </Button>
     </form>
   );

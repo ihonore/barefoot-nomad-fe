@@ -16,10 +16,11 @@ import setAccommodations from '../../redux/actions/accommodationsActions';
 import Sidebar from '../layouts/dashboardLayout/Sidebar';
 import TopBar from '../layouts/dashboardLayout/TopBar';
 import { bookingConfirmationSetTripIdAction } from '../../redux/actions/bookingConfirmationSetTripIdAction';
+import { useTranslation } from 'react-i18next';
 
 function SingleTrip() {
   const { tripid } = useParams();
-
+  const { t } = useTranslation();
   const [trip, setTrip] = useState('');
 
   const accommodationsState = useSelector((state) => state.allAccommodations);
@@ -126,7 +127,7 @@ function SingleTrip() {
                         size="small"
                         variant="outlined"
                       >
-                        BOOK ROOM
+                        {t('BOOK ROOM')}
                       </Button>
                     </CardActions>
                   </Card>

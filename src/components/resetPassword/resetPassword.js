@@ -24,7 +24,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { resetMessage } from '../../redux/actions/resetMessageActions';
-
+import { useTranslation } from 'react-i18next';
 
 const ResetPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,14 +34,14 @@ const ResetPassword = (props) => {
   const { message, messageOpen } = props.resetMessages;
 
   let navigate = useNavigate();
-
+  const { t } = useTranslation();
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
   const { token } = useParams();
   const newT = token.replace(/\|+/gi, '.');
-  localStorage.setItem('resetToken',  JSON.stringify(newT) )
+  localStorage.setItem('resetToken', JSON.stringify(newT));
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -58,7 +58,7 @@ const ResetPassword = (props) => {
   };
 
   const handleClose = () => {
-     navigate('/login');
+    navigate('/login');
   };
 
   const handleOnSubmit = async (event) => {
@@ -72,7 +72,7 @@ const ResetPassword = (props) => {
 
   const classes = useStyles();
 
-  if(messageOpen){
+  if (messageOpen) {
     return (
       <div>
         <Dialog
@@ -82,40 +82,56 @@ const ResetPassword = (props) => {
           TransitionComponent={Transition}
         >
           <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: '80vw',
-            height: '30vh',
-            margin: '10% auto'
-          },
-        }}
-      >
-        <Paper elevation={3}>
-            <Box sx={{bgcolor:'#07539F', color: 'white', padding: '10vh 10vh', 
-            display: 'flex' , flexDirection: 'column', height: 'inherit'}}>
-            <Typography sx={{color: 'white', fontSize: '20px', fontWeight: 'bold'}}>
-                You have reset Password successfully!
-            </Typography>
-            <Avatar sx={{ bgcolor: 'green', marginTop: '5%' }}>
-                < DoneIcon/>
-            </Avatar>
-            <Button autoFocus  sx={{backgroundColor:'white', marginTop: '5%', '&:hover': {
-                        backgroundColor: 'white',
-                      },}} onClick={handleClose}>
-                Login 
-              </Button>
-            </Box>
-            
-            
-        </Paper>
-      </Box>
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              '& > :not(style)': {
+                m: 1,
+                width: '80vw',
+                height: '30vh',
+                margin: '10% auto',
+              },
+            }}
+          >
+            <Paper elevation={3}>
+              <Box
+                sx={{
+                  bgcolor: '#07539F',
+                  color: 'white',
+                  padding: '10vh 10vh',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 'inherit',
+                }}
+              >
+                <Typography
+                  sx={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}
+                >
+                  {t('You have reset Password successfully!')}
+                </Typography>
+                <Avatar sx={{ bgcolor: 'green', marginTop: '5%' }}>
+                  <DoneIcon />
+                </Avatar>
+                <Button
+                  autoFocus
+                  sx={{
+                    backgroundColor: 'white',
+                    marginTop: '5%',
+                    '&:hover': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                  onClick={handleClose}
+                >
+                  {t('Login')}
+                </Button>
+              </Box>
+            </Paper>
+          </Box>
         </Dialog>
       </div>
     );
-  }else{
+  } else {
     return (
       <>
         <Container fixed>
@@ -177,13 +193,17 @@ const ResetPassword = (props) => {
                   },
                 }}
               >
-                <Typography component="h2" variant="h5" className={classes.title}>
-                  Reset your Password
+                <Typography
+                  component="h2"
+                  variant="h5"
+                  className={classes.title}
+                >
+                  {t('Reset your Password')}
                 </Typography>
                 <ValidatorForm form onSubmit={handleOnSubmit}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="outlined-adornment-password">
-                      New Password
+                      {t('New Password')}
                     </InputLabel>
                     <OutlinedInput
                       id="outlined-adornment-password"
@@ -207,7 +227,7 @@ const ResetPassword = (props) => {
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="outlined-adornment-password">
-                      Confirm Password
+                      {t('Confirm Password')}
                     </InputLabel>
                     <OutlinedInput
                       id="outlined-adornment-password"
@@ -228,13 +248,13 @@ const ResetPassword = (props) => {
                     />
                   </FormControl>
                   <Typography
-                      sx={{
-                        display: messageOpen ? 'block' : 'none',
-                        color: 'red',
-                      }}
-                    >
-                      {message}
-                    </Typography>
+                    sx={{
+                      display: messageOpen ? 'block' : 'none',
+                      color: 'red',
+                    }}
+                  >
+                    {message}
+                  </Typography>
                   <LoadingButton
                     type="submit"
                     variant="outlined"
@@ -256,7 +276,7 @@ const ResetPassword = (props) => {
                       },
                     }}
                   >
-                    Reset Password
+                    {t('Reset Password')}
                   </LoadingButton>
                 </ValidatorForm>
               </Box>
@@ -266,9 +286,6 @@ const ResetPassword = (props) => {
       </>
     );
   }
-
- 
-  
 };
 
 const mapStatesToProps = (state) => {
@@ -279,6 +296,8 @@ const mapStatesToProps = (state) => {
   };
 };
 
-export default connect(mapStatesToProps, { resetPassword, openGlobalSnackBar, resetMessage })(
-  ResetPassword
-);
+export default connect(mapStatesToProps, {
+  resetPassword,
+  openGlobalSnackBar,
+  resetMessage,
+})(ResetPassword);

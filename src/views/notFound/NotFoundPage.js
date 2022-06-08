@@ -1,9 +1,11 @@
 import { Typography, Box, Paper, Button } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import notFoundSvg from '../../../assets/svg/notfound.svg';
 
 const NotFound = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <div
@@ -45,16 +47,16 @@ const NotFound = () => {
               },
             }}
           >
-            Oops! The Page you are looking for is not found
+            {t('Oops! The Page you are looking for is not found')}
           </Typography>
           <Button
             onClick={() => {
-              navigate('/');
+              navigate(-1);
             }}
             variant="outlined"
             sx={{ marginTop: '1rem' }}
           >
-            Go To Home
+            {t('Go Back')}
           </Button>
         </Paper>
       </Box>

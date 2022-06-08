@@ -10,8 +10,10 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { connect } from 'react-redux';
 import { sendResetLink } from '../../redux/actions/forgotPassword';
 import { openGlobalSnackBar } from '../../redux/actions/globalSnackBarActions';
+import { useTranslation } from 'react-i18next';
 
 const ForgotPassword = (props) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { message, messageOpen } = props.resetMessage;
@@ -73,12 +75,12 @@ const ForgotPassword = (props) => {
               }}
             >
               <Typography component="h2" variant="h5" className={classes.title}>
-                Forgot your password ?
+                {t('Forgot your password ?')}
               </Typography>
               <ValidatorForm form onSubmit={handleSubmit}>
                 <FormControl margin="normal" required fullWidth>
                   <TextValidator
-                    label="Enter your email"
+                    label={t("Enter your email")}
                     name="email"
                     variant="outlined"
                     value={email}
@@ -136,7 +138,7 @@ const ForgotPassword = (props) => {
                       },
                     }}
                   >
-                    Send reset link
+                    {t('Send reset link')}
                   </LoadingButton>
                 </FormControl>
               </ValidatorForm>
