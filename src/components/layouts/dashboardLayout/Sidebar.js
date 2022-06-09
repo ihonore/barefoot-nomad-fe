@@ -26,6 +26,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import './sidebar.scss';
 import ChatDialoge from '../../chat/openChatDialog';
 import { Tooltip } from '@mui/material';
+import { async } from 'regenerator-runtime';
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -35,6 +36,7 @@ const Sidebar = () => {
   const { currentUser } = currentUserState;
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const navigate = useNavigate();
   const handleClose = () => {
     setOpenDrawer(false);
   };
@@ -47,11 +49,12 @@ const Sidebar = () => {
     setOpen(false);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    window.location.reload();
+  const handleLogout = async () => {
+    await dispatch(logout());
+    setTimeout(() => {
+      navigate('/login');
+    }, 1000);
   };
-  const navigate = useNavigate();
   const roleId = currentUser?.roleId;
   const menuData =
     roleId === 1

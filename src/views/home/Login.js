@@ -44,19 +44,19 @@ const LoginComponent = (props) => {
     setPassword(password);
   };
 
-  const handleLogin = async (event) => {
+  const handleLogin = async(event) => {
     event.preventDefault();
     setIsLoading(true);
-    await props.login(email, password);
-    if (!token) {
-      await props.showSuccessSnackbar('incorrect email or password', 'error');
-      setIsLoading(false);
-    }
+     await props.login(email, password);
+    navigate('/dashboard');
+    setIsLoading(false); 
+   
   };
 
-  const googleDir = async () => {
-    await window.open(
-      'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/google'
+  const googleDir = () => {
+    window.open(
+      'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/google',
+      '_self'
     );
   };
 
@@ -76,11 +76,6 @@ const LoginComponent = (props) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     if (token) {
-      const funct = async () => {
-        await props.showSuccessSnackbar('Successfully login', 'success');
-      };
-      funct();
-
       return navigate('/dashboard');
     }
   });

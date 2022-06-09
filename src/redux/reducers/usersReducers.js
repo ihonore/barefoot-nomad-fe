@@ -3,6 +3,7 @@ import { actionTypes } from "../types";
 const initialState = {
     users : [],
     roles: [],
+    managers: [],
     loading: true,
     updated: false
 };
@@ -44,6 +45,12 @@ export default function ( state = initialState, action) {
             return {
                 ...state,
                 updated: false
+            }
+        
+        case actionTypes.GET_MANAGERS:
+            return {
+                ...state,
+                managers: payload
             }
         
             default:

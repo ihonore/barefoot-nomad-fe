@@ -204,6 +204,11 @@ export const resources = {
       'Confirm Password': 'Confirm Password',
       'Reset Password': 'Reset Password',
       'Enter your email': 'Enter your email',
+      'Verifying email...': 'Verifying email...',
+      'Your email has been verified successfully!':
+        'Your email has been verified successfully!',
+      "You don't have any trip request yet!":
+        "You don't have any trip request yet!",
     },
   },
   fr: {
@@ -408,6 +413,11 @@ export const resources = {
       'Confirm Password': 'Confirmez le mot de passe',
       'Reset Password': 'réinitialiser le mot de passe',
       'Enter your email': 'Entrer votre Email',
+      'Verifying email...': "l'e-mail est en cours de vérification...",
+      'Your email has been verified successfully!':
+        'Votre e-mail a été vérifié avec succès!',
+      "You don't have any trip request yet!":
+        "Vous n'avez pas encore de demande de voyage!",
     },
   },
   kin: {
@@ -610,6 +620,10 @@ export const resources = {
       'Confirm Password': 'Emeza ijambobanga',
       'Reset Password': 'Hindura ijambobanga',
       'Enter your email': 'Shyiramo imeri yawe',
+      'Verifying email...': 'Kugenzura imeri...',
+      'Your email has been verified successfully!':
+        'Imeri yawe yagenzuwe neza!',
+      "You don't have any trip request yet!": "Nturagira ubusabe bw'urugendo!",
     },
   },
 };

@@ -26,89 +26,6 @@ import AccommodationDeleteModal from './AccommodationDeleteModal';
 import AccommodationUpdateModal from './AccommodationUpdateModal';
 import AccommodationViewModal from './AccommodationViewModal';
 
-const roleId = localStorage.getItem('roleId');
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'image',
-    headerName: 'Image',
-    width: 100,
-    renderCell: (params) => <Avatar variant="square" src={params.value} />,
-    // editable: true,
-  },
-  {
-    field: 'accommodationName',
-    headerName: 'Accommodation',
-    flex: 1,
-    // editable: true,
-  },
-  {
-    field: 'location',
-    headerName: 'Location',
-    flex: 1,
-    // editable: true,
-  },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: (params) => {
-      const [open, setOpen] = useState(false);
-      const [openD, setOpenD] = useState(false);
-      const [openU, setOpenU] = useState(false);
-      const { t } = useTranslation();
-      return (
-        <div>
-          <AccommodationDeleteModal
-            modalId={params.value.id + 'a'}
-            accommodation={params.value.acc}
-            handleClose={() => setOpenD(false)}
-            isOpen={openD}
-          />
-          <AccommodationViewModal
-            modalId={params.value.id}
-            accommodation={params.value.acc}
-            handleClose={() => setOpen(false)}
-            isOpen={open}
-          />
-          <AccommodationUpdateModal
-            accommodation={params.value.acc}
-            handleClose={() => setOpenU(false)}
-            isOpen={openU}
-          />
-          <Button
-            id={params.value.id}
-            onClick={() => setOpen(true)}
-            sx={{ ml: 1, color: '#07539F', borderColor: '#07539F' }}
-            variant="outlined"
-          >
-            {t('VIEW')}
-          </Button>
-          {roleId == 2 && (
-            <>
-              <Button
-                onClick={() => setOpenU(true)}
-                sx={{ ml: 1, background: '#07539F' }}
-                variant="contained"
-              >
-                {t('EDIT')}
-              </Button>
-              <Button
-                onClick={() => setOpenD(true)}
-                sx={{ ml: 1, color: 'red', borderColor: 'red' }}
-                variant="outlined"
-              >
-                {t('DELETE')}
-              </Button>
-            </>
-          )}
-        </div>
-      );
-    },
-    flex: 1,
-  },
-];
-
 function AccommodationList(props) {
   const navigate = useNavigate();
 
@@ -118,7 +35,6 @@ function AccommodationList(props) {
     vertical: 'top',
     horizontal: 'center',
   });
-  console.log('%cROLE ID', 'background-color:green', roleId);
   const handleClose = () => {
     props.clearSnackbar();
     setState({ ...state, open: false });
@@ -131,7 +47,91 @@ function AccommodationList(props) {
     setOpenC(true);
   };
 
+
+  const [roleId, setRoleId] = useState(null);
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: 'image',
+      headerName: 'Image',
+      width: 100,
+      renderCell: (params) => <Avatar variant="square" src={params.value} />,
+      // editable: true,
+    },
+    {
+      field: 'accommodationName',
+      headerName: 'Accommodation',
+      flex: 1,
+      // editable: true,
+    },
+    {
+      field: 'location',
+      headerName: 'Location',
+      flex: 1,
+      // editable: true,
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      renderCell: (params) => {
+        const [open, setOpen] = useState(false);
+        const [openD, setOpenD] = useState(false);
+        const [openU, setOpenU] = useState(false);
+        return (
+          <div>
+            <AccommodationDeleteModal
+              modalId={params.value.id + 'a'}
+              accommodation={params.value.acc}
+              handleClose={() => setOpenD(false)}
+              isOpen={openD}
+            />
+            <AccommodationViewModal
+              modalId={params.value.id}
+              accommodation={params.value.acc}
+              handleClose={() => setOpen(false)}
+              isOpen={open}
+            />
+            <AccommodationUpdateModal
+              accommodation={params.value.acc}
+              handleClose={() => setOpenU(false)}
+              isOpen={openU}
+            />
+            <Button
+              id={params.value.id}
+              onClick={() => setOpen(true)}
+              sx={{ ml: 1, color: '#07539F', borderColor: '#07539F' }}
+              variant="outlined"
+            >
+              {t('VIEW')}
+            </Button>
+            {roleId == 2 && (
+              <>
+                <Button
+                  onClick={() => setOpenU(true)}
+                  sx={{ ml: 1, background: '#07539F' }}
+                  variant="contained"
+                >
+                  {t('EDIT')}
+                </Button>
+                <Button
+                  onClick={() => setOpenD(true)}
+                  sx={{ ml: 1, color: 'red', borderColor: 'red' }}
+                  variant="outlined"
+                >
+                  {t('DELETE')}
+                </Button>
+              </>
+            )}
+          </div>
+        );
+      },
+      flex: 1,
+    },
+  ];
+
   useEffect(() => {
+    setRoleId(localStorage.getItem('roleId'));
     const fetchA = async () => {
       const result = await axios(
         'https://elites-barefoot-nomad.herokuapp.com/api/v1/locations'

@@ -38,12 +38,6 @@ function BodyDashboard() {
             style: {
               leftMargin: '2.8rem',
             },
-            tooltip: {
-              y: {
-                formatter: (val) => '$$(val)',
-              },
-            },
-
           }}
         />
       </div>

@@ -58,14 +58,26 @@ function Signup(props) {
 			</IconButton> */}
     </React.Fragment>
   );
+  const googleDir = () => {
+    window.open(
+      'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/google',
+      '_self'
+    );
+  };
 
+  const facebook = () => {
+    window.open(
+      'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/facebook',
+      '_self'
+    );
+  };
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ maxHeight: '100vh' }}>
       <Grid
         item
         xs={12}
         md={5}
-        style={{ height: '100vh', background: '#07539F' }}
+        style={{ minHeight: '100vh', background: '#07539F' }}
       >
         <SignupWelcome />
       </Grid>
@@ -87,7 +99,11 @@ function Signup(props) {
           ''
         )}
         {
-          <div style={{ marginTop: '10%', marginBottom: '10%' }}>
+          <div
+            style={{
+              paddingTop: '4%',
+            }}
+          >
             <Typography
               variant="h4"
               component="h3"
@@ -102,9 +118,15 @@ function Signup(props) {
             </Typography>
             <br />
             <p style={{ textAlign: 'center' }}>
-              <GoogleIcon style={{ color: '#9A9A9A' }} />
+              <GoogleIcon
+                style={{ color: '#9A9A9A', cursor: 'pointer' }}
+                onClick={googleDir}
+              />
               &nbsp; &nbsp; &nbsp;
-              <FacebookOutlinedIcon style={{ color: '#9A9A9A' }} />
+              <FacebookOutlinedIcon
+                style={{ color: '#9A9A9A', cursor: 'pointer' }}
+                onClick={facebook}
+              />
             </p>
             <br />
             <div>
