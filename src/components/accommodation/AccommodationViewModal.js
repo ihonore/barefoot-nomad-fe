@@ -6,8 +6,12 @@ import {
   ImageListItem,
   Modal,
   Typography,
+  ButtonGroup,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import DislikeAccommodation from './DislikeAccommodation';
+import LikeAccommodation from './LikeAccommodation';
+import axios from 'axios';
 
 const style = {
   position: 'absolute',
@@ -23,12 +27,13 @@ const style = {
 
 function srcset(image, size, rows = 1, cols = 1) {
   if (image) {
-    image = image.replace(/^http:/, 'https:')
+    image = image.replace(/^http:/, 'https:');
   }
   return {
     src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-    srcSet: `${image}?w=${size * cols}&h=${size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
+    srcSet: `${image}?w=${size * cols}&h=${
+      size * rows
+    }&fit=crop&auto=format&dpr=2 2x`,
   };
 }
 
@@ -38,6 +43,22 @@ function AccommodationViewModal({
   accommodation,
   modalId,
 }) {
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const resLikes = await axios.get(
+        `https://elites-barefoot-nomad.herokuapp.com/api/v1/accommodations/${accommodation.id}/likes`
+      );
+
+      setLikes(resLikes.data.payload.likes);
+      setDislikes(resLikes.data.payload.dislikes);
+    };
+
+    fetchLikes();
+  }, [dislikes, likes]);
+
   return (
     <div>
       <Modal
@@ -107,6 +128,22 @@ function AccommodationViewModal({
               />
             )}
           </ImageList>
+          <div
+            className="likesdislikes"
+            style={{ display: 'flex', marginLeft: '10%' }}
+          >
+            <LikeAccommodation
+              accommodation={accommodation}
+              likes={likes}
+              setLikes={setLikes}
+            />
+            <Typography sx={{ m: 4 }} />
+            <DislikeAccommodation
+              accommodation={accommodation}
+              dislikes={dislikes}
+              setDislikes={setDislikes}
+            />
+          </div>
         </Box>
       </Modal>
     </div>
