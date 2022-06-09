@@ -25,10 +25,7 @@ import { showNotificationPanel } from '../../../redux/actions/notificationPanelA
 import setUserSearch from '../../../redux/actions/userSearchAction';
 import DataTable from './search/DataTable';
 import { loadLocations } from '../../../redux/actions/locationsActions';
-<<<<<<< HEAD
-=======
 import LanguageSwitcher from '../../i18next/LanguageSwitcher';
->>>>>>> 89845ec (This is a combination of 20 commits.)
 // import SearchBar from 'material-ui-search-bar';
 
 const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
@@ -195,16 +192,10 @@ const TopBar = () => {
               variant="h5"
               fontWeight="600"
               color="#07539F"
-<<<<<<< HEAD
-              sx={{ display: 'none' }}
-            >
-              {/* {pathname} */}
-=======
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
               {/* {pathname} */}
               <LanguageSwitcher />
->>>>>>> 89845ec (This is a combination of 20 commits.)
             </Typography>
           </Box>
           <Search>

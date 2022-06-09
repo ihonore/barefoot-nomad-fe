@@ -26,10 +26,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import './sidebar.scss';
 import ChatDialoge from '../../chat/openChatDialog';
 import { Tooltip } from '@mui/material';
-<<<<<<< HEAD
-=======
 import { async } from 'regenerator-runtime';
->>>>>>> 89845ec (This is a combination of 20 commits.)
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -39,10 +36,7 @@ const Sidebar = () => {
   const { currentUser } = currentUserState;
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
-<<<<<<< HEAD
-=======
   const navigate = useNavigate();
->>>>>>> 89845ec (This is a combination of 20 commits.)
   const handleClose = () => {
     setOpenDrawer(false);
   };
@@ -61,11 +55,6 @@ const Sidebar = () => {
       navigate('/login');
     }, 1000);
   };
-<<<<<<< HEAD
-  const navigate = useNavigate();
-=======
-
->>>>>>> 89845ec (This is a combination of 20 commits.)
   const roleId = currentUser?.roleId;
   const menuData =
     roleId === 1

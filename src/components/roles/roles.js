@@ -6,7 +6,7 @@ import {
   usersAction,
   userRoles,
   updateRoles,
-  updateManager
+  updateManager,
 } from '../../redux/actions/usersAction';
 import { connect } from 'react-redux';
 import { Box } from '@mui/system';
@@ -33,7 +33,7 @@ const Roles = (props) => {
   const [newRole, setNewRole] = React.useState('');
   // const [oldManager, setOldManager] = React.useState('');
   // const [newManager, setNewManager] = React.useState('');
-  const [userIdentity,setUserIdentity] = React.useState('');
+  const [userIdentity, setUserIdentity] = React.useState('');
   const [newManagerId, setNewManagerId] = React.useState('');
 
   const token = JSON.parse(localStorage.getItem('userToken'))?.accesstoken;
@@ -53,13 +53,12 @@ const Roles = (props) => {
   const managersFunction = () => {
     const data = props.users?.managers;
     const allMangers = data?.managers;
-    let arr= [];
-    for(let i=0; i< allMangers?.length; i++) {
+    let arr = [];
+    for (let i = 0; i < allMangers?.length; i++) {
       arr.push(allMangers[i].email);
     }
     return arr;
-  }
-
+  };
 
   // const getRoles = roles();
 
@@ -131,7 +130,7 @@ const Roles = (props) => {
           disableClearable
           value={params.value}
           onChange={(e) => {
-            setNewManagerId(e.target.outerText)
+            setNewManagerId(e.target.outerText);
             setUserIdentity(params.row.id);
             processRowUpdateManager();
           }}
@@ -151,7 +150,7 @@ const Roles = (props) => {
             />
           )}
         />
-      ), 
+      ),
     },
   ];
   // console.log(email, oldRole, newRole);
@@ -162,7 +161,6 @@ const Roles = (props) => {
       bottom: params.isLastVisible ? 0 : 5,
     };
   }, []);
-
 
   const rows = () => {
     let data = props.users.users;
@@ -201,16 +199,16 @@ const Roles = (props) => {
     return false;
   };
 
-  const getEmailId = (emailId) =>{
+  const getEmailId = (emailId) => {
     const data = props.users.managers.managers;
     let allManagers = [];
     for (let i = 0; i < data?.length; i++) {
       allManagers = data[i];
       if (allManagers?.email == emailId) {
         return allManagers.id;
+      }
     }
   };
-  }
   // update role
 
   const processRowUpdate = React.useCallback(async () => {
@@ -226,7 +224,6 @@ const Roles = (props) => {
     setOpen(false);
     await setSnackbar({ children: `Role not updated `, severity: 'info' });
   };
-
 
   const handleYes = async () => {
     try {
@@ -254,29 +251,25 @@ const Roles = (props) => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  const handleYesManager = async() =>{
+  const handleYesManager = async () => {
     try {
       const id = await getEmailId(newManagerId);
       console.log(id, userIdentity);
-      await updateManager(userIdentity,id,  token);
+      await updateManager(userIdentity, id, token);
       setOpenManager(false);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  const handleNoManager = () =>{
+  const handleNoManager = () => {
     setOpenManager(false);
-  }
+  };
 
->>>>>>> 89845ec (This is a combination of 20 commits.)
   const row = rows();
   useEffect(() => {
     setIsLoading(true);
     const func = async () => {
-      
       await props.usersAction(token);
       setIsLoading(false);
     };
@@ -357,8 +350,6 @@ const Roles = (props) => {
           <Button onClick={handleNo}>{t('No')}</Button>
           <Button onClick={handleYes} autoFocus>
             {t('Confirm')}
-<<<<<<< HEAD
-=======
           </Button>
         </DialogActions>
       </Dialog>
@@ -378,7 +369,6 @@ const Roles = (props) => {
           <Button onClick={handleNoManager}>{t('No')}</Button>
           <Button onClick={handleYesManager} autoFocus>
             {t('Confirm')}
->>>>>>> 89845ec (This is a combination of 20 commits.)
           </Button>
         </DialogActions>
       </Dialog>
